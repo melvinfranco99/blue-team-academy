@@ -23,7 +23,10 @@ window.VIDEOS = window.VIDEOS || [];
     });
     return out;
   };
-  const durOf = s => s.d || Math.max(7, Math.min(70, (s.say || '').length / 14.2 + 1.8));
+  const narrKey = s => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(16).padStart(8, '0'); };
+  const narrOf = s => { if (!s.say || !window.NARR) return null; if (s._k === undefined) s._k = narrKey(s.say); return window.NARR[s._k] || null; };
+  const AUDIO_BASE = (document.currentScript && document.currentScript.src || '').replace(/js\/player\.js.*$/, 'audio/');
+  const durOf = s => { if (s.d) return s.d; const n = narrOf(s); return n ? Math.max(5, n[0] + 1) : Math.max(7, Math.min(70, (s.say || '').length / 14.2 + 1.8)); };
 
   /* ---------------- Resaltado de sintaxis sencillo ---------------- */
   const KW = /\b(alert|drop|pass|reject|log|tcp|udp|icmp|http|dns|tls|any|msg|sid|rev|content|flow|established|to_server|to_client|nocase|classtype|threshold|detection_filter|track|by_src|by_dst|count|seconds|pcre|depth|offset|http\.uri|http\.method|http\.user_agent|dns\.query|title|status|logsource|product|service|category|detection|selection|filter|condition|level|tags|falsepositives|rule|meta|strings|and|or|not|of|them|index|sourcetype|stats|where|eval|table|sort|timechart|search|by|as|def|import|for|in|if|return|print|from|with|true|false|vars|address-groups|HOME_NET|EXTERNAL_NET|sudo|systemctl|apt|install|enable|start|cat|tail|grep|jq)\b/g;
@@ -262,7 +265,8 @@ window.VIDEOS = window.VIDEOS || [];
   /* ---------------- Reproductor ---------------- */
   class Player {
     constructor(root, side) {
-      this.root = root; this.side = side; this.rate = 1; this.voice = !!synth; this.playing = false; this.spk = 0; this.speaking = false;
+      this.root = root; this.side = side; this.rate = 1; this.voice = true; this.au = new Audio(); this.au.preload = 'auto'; this.auOn = false;
+      this.au.onerror = () => { if (this.auOn) { this.auOn = false; if (this.playing && this.voice) this.speak(this.sentIdx); } }; this.playing = false; this.spk = 0; this.speaking = false;
       root.classList.add('cp');
       root.innerHTML = `<div class="cp-stage-wrap"><div class="cp-stage"><div class="cp-bg"></div><div class="cp-chap"></div><div class="cp-wm"></div><div class="cp-host"></div><div class="cp-sub"></div></div><div class="cp-big"><div>▶</div></div></div>
       <div class="cp-ctrl"><button data-a="prev" title="Escena anterior (←)">⏮</button><button data-a="play" title="Reproducir/Pausa (espacio)">▶</button><button data-a="next" title="Escena siguiente (→)">⏭</button>
@@ -276,9 +280,8 @@ window.VIDEOS = window.VIDEOS || [];
       wrap.onclick = () => this.toggle();
       const B = a => root.querySelector(`[data-a="${a}"]`);
       B('play').onclick = () => this.toggle(); B('prev').onclick = () => this.go(this.idx - 1); B('next').onclick = () => this.go(this.idx + 1);
-      B('rate').onchange = e => { this.rate = +e.target.value; if (this.playing && this.voice) this.speak(this.sentIdx); };
-      if (!synth) B('voice').classList.remove('on');
-      B('voice').onclick = () => { if (!synth) return alertNoVoice(); this.voice = !this.voice; B('voice').classList.toggle('on', this.voice); B('voice').textContent = this.voice ? '🔊' : '🔇'; if (this.voice && this.playing) this.speak(this.sentIdx); else this.stopSpeech(); };
+      B('rate').onchange = e => { this.rate = +e.target.value; if (this.playing && this.voice) this.speak(this.sentIdx); this.au.playbackRate = this.rate; };
+      B('voice').onclick = () => { this.voice = !this.voice; B('voice').classList.toggle('on', this.voice); B('voice').textContent = this.voice ? '🔊' : '🔇'; if (this.voice && this.playing) this.speak(this.sentIdx); else this.stopSpeech(); };
       B('cc').onclick = () => { root.classList.toggle('nosub'); B('cc').classList.toggle('on'); };
       B('fs').onclick = () => document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen?.();
       this.bar.onclick = e => { const r = this.bar.getBoundingClientRect(); this.seek((e.clientX - r.left) / r.width * this.total); };
@@ -313,6 +316,11 @@ window.VIDEOS = window.VIDEOS || [];
       this.sents = sentences(s.say);
       const tot = this.sents.reduce((a, x) => a + x.length, 0) || 1; let acc = 0;
       this.sentAt = this.sents.map(x => { const st = acc / tot; acc += x.length; return st; });
+      this.nar = narrOf(s);
+      if (this.nar) this.sentAt = this.nar[1].map(x => x / this.durs[i]);
+      this.auOn = !!(this.nar && AUDIO_BASE);
+      if (this.auOn) { this.au.src = AUDIO_BASE + s._k + '.mp3'; this.au.playbackRate = this.rate; }
+      else this.au.removeAttribute('src');
       this.sentIdx = this.sentFor(this.t / this.durs[i]);
       this.root.querySelector('.cp-chap').textContent = this.chapOf(i);
       r.up(Math.min(1, this.t / this.durs[i]));
@@ -325,7 +333,15 @@ window.VIDEOS = window.VIDEOS || [];
     sentFor(f) { let k = 0; this.sentAt.forEach((st, j) => { if (f >= st) k = j; }); return k; }
     setSub(k) { this.sentIdx = k; this.sub.textContent = this.sents[k] || ''; }
     speak(from) {
-      this.stopSpeech(); if (!synth) return;
+      this.stopSpeech();
+      if (this.auOn) {
+        const st = this.nar[1][from || 0] || 0, t = Math.max(this.t, st);
+        try { this.au.currentTime = t; } catch (e) {}
+        this.speaking = t < this.nar[0];
+        const p = this.au.play(); if (p) p.catch(err => { if (err.name !== 'AbortError') { this.auOn = false; this.speak(from); } });
+        return;
+      }
+      if (!synth) return noVoice();
       const id = ++this.spk; const list = this.sents.slice(from || 0);
       if (!list.length) return;
       this.speaking = true;
@@ -337,7 +353,7 @@ window.VIDEOS = window.VIDEOS || [];
         synth.speak(u);
       });
     }
-    stopSpeech() { this.spk++; this.speaking = false; if (synth && (synth.speaking || synth.pending)) synth.cancel(); }
+    stopSpeech() { this.spk++; this.speaking = false; if (!this.au.paused) this.au.pause(); if (synth && (synth.speaking || synth.pending)) synth.cancel(); }
     toggle() { this.playing ? this.pause() : this.play(); }
     play() { if (!this.v) return; if (this.idx === this.sc.length - 1 && this.t >= this.durs[this.idx]) this.enter(0, 0); this.playing = true; this.big.classList.add('hide'); this.btnPlay(); if (this.voice) this.speak(this.sentIdx); }
     pause() { this.playing = false; this.btnPlay(); this.stopSpeech(); }
@@ -352,7 +368,8 @@ window.VIDEOS = window.VIDEOS || [];
           else if (this.idx < this.sc.length - 1) { this.enter(this.idx + 1, 0); return; }
           else { this.t = d; this.pause(); markWatched(this.v.id); }
         }
-        if (!(this.voice && synth)) { const k = this.sentFor(this.t / d); if (k !== this.sentIdx) this.setSub(k); }
+        if (this.auOn && this.voice) { this.speaking = !this.au.ended && !this.au.error && this.au.currentTime < this.nar[0] - 0.05; const k = this.sentFor(this.au.currentTime / d); if (k !== this.sentIdx) this.setSub(k); }
+        else if (!(this.voice && synth)) { const k = this.sentFor(this.t / d); if (k !== this.sentIdx) this.setSub(k); }
       }
       this.cur.up(Math.min(1, this.t / d));
       const T = this.starts[this.idx] + Math.min(this.t, d);
@@ -369,6 +386,7 @@ window.VIDEOS = window.VIDEOS || [];
       this.side.querySelectorAll('.chi').forEach(c => c.onclick = () => { this.enter(+c.dataset.i, 0); if (!this.playing) this.play(); });
     }
   }
+  let warned = false; function noVoice() { if (!warned) { warned = true; alertNoVoice(); } }
   function alertNoVoice() { const m = document.createElement('div'); m.className = 'callout warn'; m.textContent = 'Tu navegador no ofrece síntesis de voz. Los subtítulos siguen disponibles.'; document.querySelector('.cp')?.after(m); setTimeout(() => m.remove(), 4000); }
   function markWatched(id) { try { const w = JSON.parse(localStorage.getItem('bta-watched') || '[]'); if (!w.includes(id)) { w.push(id); localStorage.setItem('bta-watched', JSON.stringify(w)); document.dispatchEvent(new Event('bta-watched')); } } catch (e) { } }
 
