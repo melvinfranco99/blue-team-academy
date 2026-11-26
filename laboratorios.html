@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laboratorios prácticos de Blue Team · Blue Team Academy</title>
+<meta name="description" content="Monta tu laboratorio de ciberseguridad defensiva gratis y resuelve ejercicios guiados con Nmap, Suricata, Splunk, Zabbix y más.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css"><link rel="icon" href="assets/img/favicon.svg">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+<section class="page-hero"><div class="container">
+  <div class="breadcrumb">inicio / laboratorios</div>
+  <span class="eyebrow">Aprender haciendo</span>
+  <h1>Tu <span class="grad">laboratorio</span> de Blue Team en casa</h1>
+  <p class="lead">Ver no es suficiente: hay que practicar. Aquí tienes cómo montar gratis un laboratorio aislado con máquinas virtuales y una colección de ejercicios guiados, con pistas y soluciones.</p>
+  <div class="callout warn"><div class="ct">⚖️ Regla de oro</div><p>Practica <b>solo</b> en tu laboratorio aislado o en sistemas con autorización por escrito. Escanear o atacar sistemas ajenos es ilegal (en España, art. 197 bis y 264 del Código Penal), aunque “solo estés probando”.</p></div>
+</div></section>
+
+<section class="section"><div class="container">
+  <span class="eyebrow">Paso 1</span><h2>Arquitectura del laboratorio</h2>
+  <figure class="diagram"><svg viewBox="0 0 1000 400" role="img" aria-label="Arquitectura del laboratorio">
+    <g font-family="Inter" font-size="14" fill="#e6edf7">
+    <rect x="20" y="20" width="960" height="360" rx="16" fill="rgba(34,211,238,.04)" stroke="#22d3ee" stroke-dasharray="7 6"/>
+    <text x="40" y="48" fill="#22d3ee" font-family="JetBrains Mono" font-weight="700">Red Host-Only / NAT Network · 192.168.56.0/24 · SIN acceso a tu red real</text>
+    <g><rect x="60" y="90" width="200" height="90" rx="12" fill="#0f182b" stroke="#10b981" stroke-width="2"/><text x="160" y="125" text-anchor="middle" font-size="24">👩‍💻</text><text x="160" y="150" text-anchor="middle" font-weight="700">Analista (.10)</text><text x="160" y="168" text-anchor="middle" fill="#93a4c0" font-size="12">Ubuntu / Kali · Nmap, Wireshark</text></g>
+    <g><rect x="400" y="90" width="200" height="90" rx="12" fill="#0f182b" stroke="#a78bfa" stroke-width="2"/><text x="500" y="125" text-anchor="middle" font-size="24">🧠</text><text x="500" y="150" text-anchor="middle" font-weight="700">SIEM (.5)</text><text x="500" y="168" text-anchor="middle" fill="#93a4c0" font-size="12">Splunk Free o Wazuh · 8 GB RAM</text></g>
+    <g><rect x="740" y="90" width="200" height="90" rx="12" fill="#0f182b" stroke="#f97316" stroke-width="2"/><text x="840" y="125" text-anchor="middle" font-size="24">🦦</text><text x="840" y="150" text-anchor="middle" font-weight="700">Sensor (.6)</text><text x="840" y="168" text-anchor="middle" fill="#93a4c0" font-size="12">Suricata + Zabbix server</text></g>
+    <g><rect x="60" y="250" width="200" height="90" rx="12" fill="#0f182b" stroke="#22d3ee" stroke-width="2"/><text x="160" y="285" text-anchor="middle" font-size="24">🌐</text><text x="160" y="310" text-anchor="middle" font-weight="700">web01 (.20)</text><text x="160" y="328" text-anchor="middle" fill="#93a4c0" font-size="12">Ubuntu + Apache + UF</text></g>
+    <g><rect x="400" y="250" width="200" height="90" rx="12" fill="#0f182b" stroke="#3b82f6" stroke-width="2"/><text x="500" y="285" text-anchor="middle" font-size="24">🪟</text><text x="500" y="310" text-anchor="middle" font-weight="700">win10 / dc01 (.30)</text><text x="500" y="328" text-anchor="middle" fill="#93a4c0" font-size="12">Evaluación 180 días + Sysmon</text></g>
+    <g><rect x="740" y="250" width="200" height="90" rx="12" fill="#0f182b" stroke="#ef4444" stroke-width="2"/><text x="840" y="285" text-anchor="middle" font-size="24">💀</text><text x="840" y="310" text-anchor="middle" font-weight="700">meta2 (.40)</text><text x="840" y="328" text-anchor="middle" fill="#93a4c0" font-size="12">Metasploitable 2 (vulnerable)</text></g>
+    <g stroke="#22d3ee" stroke-width="2" opacity=".6"><path class="flow" d="M160 250 L460 180"/><path class="flow" d="M500 250 L500 180"/><path class="flow" d="M840 250 L560 180"/><path class="flow" d="M740 135 L600 135"/></g>
+    </g></svg><figcaption>Todo virtualizado y aislado. Con 16 GB de RAM puedes tener 3–4 máquinas encendidas a la vez.</figcaption></figure>
+
+  <div class="grid g2">
+    <div>
+      <h3>Requisitos</h3>
+      <ul class="muted"><li>PC con 16 GB RAM (8 GB mínimo, encendiendo menos VMs), 150 GB libres.</li><li>Virtualización activada en la BIOS (VT-x / AMD-V).</li><li>Software: <b>VirtualBox</b> o <b>VMware Workstation Pro</b> (gratis para uso personal).</li></ul>
+    </div>
+    <div>
+      <h3>Alternativas “todo en uno”</h3>
+      <ul class="muted"><li><b>Security Onion</b>: Suricata + Zeek + Elastic ya integrados.</li><li><b>Wazuh</b>: SIEM/XDR libre con agentes para Windows y Linux.</li><li>Plataformas online: <b>TryHackMe</b> (rutas SOC Level 1/2), <b>Blue Team Labs Online</b>, <b>LetsDefend</b>, <b>HTB Sherlocks</b>, <b>CyberDefenders</b>.</li></ul>
+    </div>
+  </div>
+
+  <span class="eyebrow" style="margin-top:40px">Paso 2</span><h2>Montaje paso a paso</h2>
+  <ol class="steps">
+    <li><h4>Crear la red aislada</h4><p class="muted">En VirtualBox: <i>Archivo → Herramientas → Network Manager → Host-only Networks → Crear</i> con 192.168.56.1/24. Asigna esa red a todas las VMs. Para descargar paquetes, añade temporalmente un segundo adaptador NAT y quítalo después.</p></li>
+    <li><h4>VM del analista (Ubuntu o Kali)</h4><pre><code>sudo apt update && sudo apt install -y nmap wireshark tcpdump jq python3-pip
+sudo usermod -aG wireshark $USER   # capturar sin root</code></pre></li>
+    <li><h4>SIEM: Splunk Free (o Wazuh)</h4><pre><code># Splunk (Ubuntu, 8 GB RAM recomendado)
+sudo dpkg -i splunk-9.x-linux-amd64.deb
+sudo /opt/splunk/bin/splunk start --accept-license
+sudo /opt/splunk/bin/splunk enable listen 9997 -auth admin:TU_PASSWORD
+# Alternativa Wazuh (all-in-one)
+curl -sO https://packages.wazuh.com/4.x/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code></pre></li>
+    <li><h4>Sensor: Suricata + Zabbix</h4><pre><code>sudo add-apt-repository ppa:oisf/suricata-stable -y
+sudo apt install -y suricata && sudo suricata-update
+sudo nano /etc/suricata/suricata.yaml   # HOME_NET y interfaz
+sudo systemctl restart suricata</code></pre><p class="muted">Para que el sensor vea el tráfico de las demás VMs, activa en su adaptador <i>Modo promiscuo: Permitir todo</i>.</p></li>
+    <li><h4>Víctimas</h4><p class="muted">web01 con Apache y Universal Forwarder; Windows 10/11 o Server de evaluación con <b>Sysmon</b> (configuración de SwiftOnSecurity u Olaf Hartong) y Universal Forwarder; y Metasploitable 2 solo en la red aislada.</p><pre><code># Windows (PowerShell como administrador)
+.\Sysmon64.exe -accepteula -i sysmonconfig-export.xml
+Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational" -MaxEvents 5</code></pre></li>
+    <li><h4>Haz un snapshot</h4><p class="muted">Guarda una instantánea de cada VM “limpia”. Así podrás romper cosas y volver atrás en segundos.</p></li>
+  </ol>
+</div></section>
+
+<section class="section alt"><div class="container">
+  <span class="eyebrow">Paso 3</span><h2>Ejercicios guiados</h2>
+  <p class="lead">Cada ejercicio indica nivel, objetivo, video de apoyo y solución. Intenta resolverlo antes de abrir la solución.</p>
+  <div data-tabs>
+    <div class="tabs"><button class="active" data-tab="e1">🟢 Principiante</button><button data-tab="e2">🔵 Intermedio</button><button data-tab="e3">🟣 Avanzado</button></div>
+
+    <div class="tab-panel active" id="e1">
+      <div class="card" style="margin-bottom:16px"><h3>E1 · Inventario de la red con Nmap</h3><p><b>Objetivo:</b> descubre todos los hosts vivos y sus servicios, guarda una línea base y detecta un cambio.</p><p class="muted">Pista: <code>-sn</code>, <code>-sV</code>, <code>-oA</code>, <code>ndiff</code>. Después arranca un servicio nuevo en web01 (<code>python3 -m http.server 8888</code>) y repite.</p>
+        <details><summary>Ver solución</summary><div><pre><code>sudo nmap -sn 192.168.56.0/24
+sudo nmap -sS -sV -oA base 192.168.56.0/24
+# (en web01) python3 -m http.server 8888
+sudo nmap -sS -sV -oA hoy 192.168.56.0/24
+ndiff base.xml hoy.xml     # → +8888/tcp open http SimpleHTTPServer</code></pre></div></details>
+        <a class="btn small" href="videos.html#nmap">▶ Video de apoyo: Nmap</a></div>
+      <div class="card" style="margin-bottom:16px"><h3>E2 · Detecta un escaneo en una captura</h3><p><b>Objetivo:</b> captura tráfico mientras otra VM te escanea e identifica la IP atacante y cuántos puertos tocó.</p>
+        <details><summary>Ver solución</summary><div><pre><code>sudo tcpdump -i eth0 -w scan.pcap        # en la víctima
+sudo nmap -sS 192.168.56.20               # desde el analista
+tcpdump -nr scan.pcap 'tcp[tcpflags]==tcp-syn' | awk '{print $3}' | cut -d. -f1-4 | sort | uniq -c
+# Wireshark: tcp.flags.syn==1 && tcp.flags.ack==0  → Statistics → Conversations</code></pre></div></details>
+        <a class="btn small" href="videos.html#redes">▶ Video de apoyo: Redes</a></div>
+      <div class="card"><h3>E3 · Lee logs de autenticación</h3><p><b>Objetivo:</b> genera 10 intentos SSH fallidos contra web01 y encuéntralos en <code>/var/log/auth.log</code>, contando por IP.</p>
+        <details><summary>Ver solución</summary><div><pre><code>grep "Failed password" /var/log/auth.log | grep -oE 'from [0-9.]+' | sort | uniq -c | sort -rn
+# o con journalctl:
+journalctl -u ssh --since "1 hour ago" | grep Failed</code></pre></div></details></div>
+    </div>
+
+    <div class="tab-panel" id="e2">
+      <div class="card" style="margin-bottom:16px"><h3>E4 · Tu primera regla de Suricata</h3><p><b>Objetivo:</b> crea una regla que alerte cuando alguien haga una petición HTTP con User-Agent <code>sqlmap</code> y verifícala en <code>eve.json</code>.</p>
+        <details><summary>Ver solución</summary><div><pre><code># /etc/suricata/rules/local.rules
+alert http any any -> $HOME_NET any (msg:"LAB sqlmap UA"; http.user_agent; content:"sqlmap"; nocase; sid:1100010; rev:1;)
+sudo suricata -T -c /etc/suricata/suricata.yaml && sudo systemctl restart suricata
+curl -A "sqlmap/1.8" http://192.168.56.20/
+jq 'select(.event_type=="alert") | .alert.signature' /var/log/suricata/eve.json</code></pre></div></details>
+        <a class="btn small" href="videos.html#suricata">▶ Video: Suricata</a></div>
+      <div class="card" style="margin-bottom:16px"><h3>E5 · Detección de fuerza bruta en Splunk</h3><p><b>Objetivo:</b> envía auth.log a Splunk y crea una alerta programada que dispare con &gt;20 fallos en 5 min por IP. Bonus: indica si alguna IP tuvo éxito.</p>
+        <details><summary>Ver solución</summary><div><pre><code>index=linux sourcetype=linux_secure ("Failed password" OR "Accepted password")
+| rex "(?&lt;res&gt;Failed|Accepted) password for (invalid user )?(?&lt;user&gt;\S+) from (?&lt;src_ip&gt;\S+)"
+| bin _time span=5m
+| stats count(eval(res="Failed")) as fallos count(eval(res="Accepted")) as exitos dc(user) as usuarios by _time src_ip
+| where fallos > 20</code></pre></div></details>
+        <a class="btn small" href="videos.html#splunk">▶ Video: Splunk</a></div>
+      <div class="card"><h3>E6 · Trigger de seguridad en Zabbix</h3><p><b>Objetivo:</b> alerta si cambia <code>/etc/passwd</code> en web01. Pruébalo creando un usuario.</p>
+        <details><summary>Ver solución</summary><div><pre><code>Item:    vfs.file.cksum[/etc/passwd,sha256]   (cada 1m, tipo texto)
+Trigger: change(/web01/vfs.file.cksum[/etc/passwd,sha256])<>0   Severidad: High
+Prueba:  sudo useradd pruebaLab</code></pre></div></details>
+        <a class="btn small" href="videos.html#zabbix">▶ Video: Zabbix</a></div>
+    </div>
+
+    <div class="tab-panel" id="e3">
+      <div class="card" style="margin-bottom:16px"><h3>E7 · Simula y detecta Office → PowerShell</h3><p><b>Objetivo:</b> con Sysmon en Windows, simula la técnica T1059.001 (por ejemplo con <b>Atomic Red Team</b>) y crea la detección en Splunk a partir de la regla Sigma del video.</p>
+        <details><summary>Ver solución</summary><div><pre><code># Windows (laboratorio): instalar Invoke-AtomicRedTeam y ejecutar un test de T1059.001
+Invoke-AtomicTest T1059.001 -TestNumbers 1
+# Splunk (Sysmon EventCode 1)
+index=sysmon EventCode=1 (ParentImage="*\\WINWORD.EXE" OR ParentImage="*\\EXCEL.EXE")
+  (Image="*\\powershell.exe" OR Image="*\\cmd.exe")
+| table _time host User ParentImage Image CommandLine</code></pre></div></details>
+        <a class="btn small" href="videos.html#hunting">▶ Video: Threat Hunting</a></div>
+      <div class="card" style="margin-bottom:16px"><h3>E8 · Caza de beaconing</h3><p><b>Objetivo:</b> en una VM, ejecuta un “beacon” inofensivo (<code>while true; do curl -s http://192.168.56.5:8000/ >/dev/null; sleep 30; done</code>) y encuéntralo por su regularidad.</p>
+        <details><summary>Ver solución</summary><div><pre><code># Con eve.json de Suricata (event_type=http) o logs de proxy
+jq -r 'select(.event_type=="http") | [.timestamp,.src_ip,.http.hostname] | @tsv' eve.json > http.tsv
+# En Splunk: streamstats + stdev (ver lección 12) → desviación ≈ 0 s, media ≈ 30 s</code></pre></div></details></div>
+      <div class="card"><h3>E9 · Mini-incidente completo</h3><p><b>Objetivo:</b> un compañero (o tú con un script) crea un usuario con UID 0 en web01, lanza un proceso que consume CPU y abre un puerto nuevo. Detecta los tres hechos con Zabbix, Nmap/ndiff y Splunk, y redacta un informe siguiendo las fases NIST.</p>
+        <details><summary>Plantilla de informe</summary><div><pre><code>1. Resumen ejecutivo (3 líneas)
+2. Línea temporal (hora · fuente · evento)
+3. Alcance (hosts, cuentas, datos)
+4. Contención / erradicación / recuperación realizadas
+5. Causa raíz
+6. Lecciones aprendidas y acciones (responsable + fecha)</code></pre></div></details>
+        <a class="btn small" href="videos.html#ir">▶ Video: Respuesta a incidentes</a></div>
+    </div>
+  </div>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/common.js"></script>
+</body>
+</html>

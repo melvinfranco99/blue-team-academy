@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Videos prácticos · Blue Team Academy</title>
+<meta name="description" content="Videos dinámicos y narrados de ciberseguridad defensiva: Nmap, Nessus, Snort, Suricata, Splunk, Zabbix, Shodan, Maltego, respuesta a incidentes, threat hunting e IA.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css"><link rel="stylesheet" href="assets/css/player.css">
+<link rel="icon" href="assets/img/favicon.svg">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+  <section class="page-hero"><div class="container">
+    <div class="breadcrumb">inicio / videos</div>
+    <span class="eyebrow">Academia en video</span>
+    <h1>Videos <span class="grad">prácticos y narrados</span></h1>
+    <p class="lead">13 lecciones animadas (más de 1h40 de contenido) que te llevan desde cero hasta nivel senior. Cada video combina narración por voz, subtítulos, diagramas animados y <b>simulaciones de las herramientas reales</b> en acción: terminal, Splunk, Suricata, Nessus, Zabbix, Shodan, Maltego…</p>
+    <div class="btn-row" style="margin-top:8px"><span class="tag c">▶ Espacio: reproducir/pausa</span><span class="tag c">← → escena</span><span class="tag c">F pantalla completa</span><span class="tag c">C subtítulos</span><span class="tag c">M voz</span></div>
+  </div></section>
+
+  <section class="section" style="padding-top:36px"><div class="container" style="max-width:1400px">
+    <div class="vlayout">
+      <div>
+        <div id="player"></div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start">
+          <div><div class="vnum" id="v-num"></div><h2 id="v-title" style="font-size:1.5rem;margin:.2em 0"></h2><p class="muted" id="v-desc" style="margin:0"></p></div>
+          <div class="btn-row"><button class="btn small" id="v-prev">⟵ Anterior</button><button class="btn small primary" id="v-next">Siguiente video ⟶</button></div>
+        </div>
+        <div class="callout" style="margin-top:20px"><div class="ct">🔊 ¿No oyes la narración?</div><p>La voz usa la síntesis de voz de tu navegador (Chrome y Edge suelen tener voces en español de mejor calidad). Si no hay voz disponible, el video avanza igual con subtítulos. Puedes ajustar la velocidad de 0.75× a 2×.</p></div>
+      </div>
+      <aside class="vside" id="side"></aside>
+    </div>
+  </div></section>
+
+  <section class="section alt"><div class="container">
+    <span class="eyebrow">Temario</span>
+    <h2>Todas las lecciones <span id="prog" class="tag g" style="vertical-align:middle;font-size:.8rem"></span></h2>
+    <p class="lead">Recomendamos verlas en orden: cada una se apoya en la anterior. Tu progreso se guarda en este navegador.</p>
+    <div class="grid g3" id="gallery" style="margin-top:28px"></div>
+  </div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/player.js"></script>
+<script src="assets/js/videos/v01-intro.js"></script>
+<script src="assets/js/videos/v02-redes.js"></script>
+<script src="assets/js/videos/v03-nmap.js"></script>
+<script src="assets/js/videos/v04-nessus.js"></script>
+<script src="assets/js/videos/v05-snort.js"></script>
+<script src="assets/js/videos/v06-suricata.js"></script>
+<script src="assets/js/videos/v07-splunk.js"></script>
+<script src="assets/js/videos/v08-zabbix.js"></script>
+<script src="assets/js/videos/v09-shodan.js"></script>
+<script src="assets/js/videos/v10-maltego.js"></script>
+<script src="assets/js/videos/v11-ir.js"></script>
+<script src="assets/js/videos/v12-hunting.js"></script>
+<script src="assets/js/videos/v13-ia.js"></script>
+<script src="assets/js/common.js"></script>
+<script>
+(function(){
+  const V = VIDEOS.sort((a,b)=>a.n-b.n);
+  const P = new CyberCast.Player(document.getElementById('player'), document.getElementById('side'));
+  let cur = 0;
+  function open(i, scroll){
+    cur = (i+V.length)%V.length; const v = V[cur];
+    P.load(v);
+    document.getElementById('v-num').textContent = `LECCIÓN ${String(v.n).padStart(2,'0')} · ${v.level.toUpperCase()} · ${CyberCast.fmt(CyberCast.totalOf(v))} min`;
+    document.getElementById('v-title').textContent = v.title;
+    document.getElementById('v-desc').textContent = v.desc;
+    history.replaceState(null,'','#'+v.id);
+    document.title = v.title + ' · Blue Team Academy';
+    if (scroll) document.getElementById('player').scrollIntoView({behavior:'smooth', block:'center'});
+    gallery();
+  }
+  function gallery(){
+    const w = CyberCast.watched();
+    document.getElementById('prog').textContent = `${w.length}/${V.length} completadas`;
+    document.getElementById('gallery').innerHTML = V.map((v,i)=>`
+      <article class="card vcard link" data-i="${i}" style="${i===cur?'border-color:var(--accent)':''}">
+        <div class="vthumb" style="background:radial-gradient(circle at 30% 30%, ${v.color}33, transparent 60%), linear-gradient(135deg,#0c1424,#060a13)">
+          ${w.includes(v.id)?'<span class="done-badge">✓ VISTO</span>':''}
+          <span class="ico">${v.icon}</span><span class="dur">${CyberCast.fmt(CyberCast.totalOf(v))}</span>
+          <div class="play"><span>▶</span></div>
+        </div>
+        <div class="vbody"><div class="vnum">LECCIÓN ${String(v.n).padStart(2,'0')} · ${v.tool} · ${v.level}</div><h3>${v.title}</h3><p class="muted">${v.desc}</p></div>
+      </article>`).join('');
+    document.querySelectorAll('.vcard').forEach(c=>c.onclick=()=>open(+c.dataset.i,true));
+  }
+  document.getElementById('v-prev').onclick=()=>open(cur-1,true);
+  document.getElementById('v-next').onclick=()=>open(cur+1,true);
+  document.addEventListener('bta-watched', gallery);
+  const h = location.hash.slice(1); const idx = V.findIndex(v=>v.id===h);
+  open(idx>=0?idx:0,false);
+})();
+</script>
+</body>
+</html>

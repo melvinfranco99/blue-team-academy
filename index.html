@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blue Team Academy · Aprende ciberseguridad defensiva desde cero</title>
+<meta name="description" content="Plataforma gratuita para aprender ciberseguridad defensiva desde cero: perfiles junior a CISO, fundamentos, videos prácticos con Splunk, Suricata, Snort, Nmap, Nessus, Zabbix, Shodan, Maltego e IA en el SOC.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="icon" href="assets/img/favicon.svg">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+<section class="hero"><div class="container hero-grid">
+  <div>
+    <span class="eyebrow">Ciberseguridad defensiva · Blue Team</span>
+    <h1>Aprende a <span class="grad">defender</span> desde cero hasta nivel senior</h1>
+    <p class="lead">Todo explicado paso a paso con analogías, diagramas, tablas y <b>videos dinámicos narrados</b> donde ves las herramientas reales en acción: Splunk, Suricata, Snort, Nmap, Nessus, Zabbix, Shodan, Maltego… y cómo la <b>IA</b> potencia el trabajo del SOC.</p>
+    <div class="btn-row" style="margin-top:26px">
+      <a class="btn primary" href="videos.html">▶ Empezar con los videos</a>
+      <a class="btn" href="perfiles.html">Ver perfiles profesionales</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>13</b><span>videos prácticos</span></div>
+      <div><b>+100 min</b><span>de lecciones narradas</span></div>
+      <div><b>8</b><span>perfiles explicados</span></div>
+      <div><b>10+</b><span>herramientas</span></div>
+    </div>
+  </div>
+  <div class="float">
+    <svg viewBox="0 0 520 460" role="img" aria-label="Ilustración de un SOC protegiendo la red">
+      <defs>
+        <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+        <radialGradient id="glow"><stop offset="0" stop-color="#22d3ee" stop-opacity=".35"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="260" cy="230" r="210" fill="url(#glow)"/>
+      <circle cx="260" cy="230" r="185" fill="none" stroke="#1d2a45" stroke-dasharray="4 8"/>
+      <circle cx="260" cy="230" r="135" fill="none" stroke="#1d2a45"/>
+      <g stroke="#22d3ee" stroke-width="2" fill="none" opacity=".7">
+        <path class="flow" d="M260 230 L95 120"/><path class="flow" d="M260 230 L430 110"/><path class="flow" d="M260 230 L80 340"/><path class="flow" d="M260 230 L440 350"/><path class="flow" d="M260 230 L260 45"/>
+      </g>
+      <g font-family="Inter" font-size="13" fill="#e6edf7" text-anchor="middle">
+        <g><rect x="45" y="92" width="100" height="56" rx="10" fill="#0f182b" stroke="#2a3a5c"/><text x="95" y="117" font-size="20">🖥️</text><text x="95" y="138">Servidores</text></g>
+        <g><rect x="380" y="82" width="100" height="56" rx="10" fill="#0f182b" stroke="#2a3a5c"/><text x="430" y="107" font-size="20">☁️</text><text x="430" y="128">Cloud</text></g>
+        <g><rect x="30" y="312" width="100" height="56" rx="10" fill="#0f182b" stroke="#2a3a5c"/><text x="80" y="337" font-size="20">💻</text><text x="80" y="358">Endpoints</text></g>
+        <g><rect x="390" y="322" width="100" height="56" rx="10" fill="#0f182b" stroke="#2a3a5c"/><text x="440" y="347" font-size="20">🌐</text><text x="440" y="368">Red / IDS</text></g>
+        <g><rect x="210" y="15" width="100" height="56" rx="10" fill="#0f182b" stroke="#2a3a5c"/><text x="260" y="40" font-size="20">📧</text><text x="260" y="61">Correo</text></g>
+      </g>
+      <path d="M260 150 205 172v40c0 37 24 62 55 72 31-10 55-35 55-72v-40z" fill="#0a1120" stroke="url(#hg)" stroke-width="5"/>
+      <path d="M235 228l17 17 34-37" fill="none" stroke="#22d3ee" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="260" y="318" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#22d3ee" letter-spacing="3">SOC</text>
+      <g class="pulse"><circle cx="470" cy="230" r="7" fill="#ef4444"/><text x="470" y="258" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#fca5a5">amenaza</text></g>
+      <path d="M462 230 L330 230" stroke="#ef4444" stroke-width="2" stroke-dasharray="5 5" class="flow"/>
+    </svg>
+  </div>
+</div></section>
+
+<section class="section alt"><div class="container">
+  <span class="eyebrow">Qué vas a aprender</span>
+  <h2>Un camino completo, de cero a profesional</h2>
+  <p class="lead">Sigue el orden recomendado. Cada bloque tiene explicación teórica sencilla, ejemplos reales y un video práctico.</p>
+  <div class="grid g3" style="margin-top:30px">
+    <a class="card link reveal" href="fundamentos.html"><div class="icon">📚</div><h3>1 · Fundamentos</h3><p>Tríada CIA, riesgo, redes, logs, defensa en profundidad, Kill Chain y MITRE ATT&amp;CK explicados con analogías.</p><span class="tag g">Principiante</span></a>
+    <a class="card link reveal" href="perfiles.html"><div class="icon">👥</div><h3>2 · Perfiles profesionales</h3><p>Junior, intermedio, senior, threat hunter, DFIR, detection engineer, arquitecto y CISO: qué hacen, día típico, salario y cómo llegar.</p><span class="tag c">Carrera</span></a>
+    <a class="card link reveal" href="videos.html"><div class="icon">🎬</div><h3>3 · Videos prácticos</h3><p>13 lecciones narradas con herramientas en acción: Nmap, Nessus, Snort, Suricata, Splunk, Zabbix, Shodan, Maltego.</p><span class="tag y">Lo más importante</span></a>
+    <a class="card link reveal" href="laboratorios.html"><div class="icon">🧪</div><h3>4 · Laboratorios</h3><p>Monta tu propio laboratorio gratis con máquinas virtuales y resuelve ejercicios guiados con soluciones.</p><span class="tag p">Práctica</span></a>
+    <a class="card link reveal" href="ia.html"><div class="icon">🤖</div><h3>5 · IA en el SOC</h3><p>Cómo usar Claude, GPT y Claude Code en seguridad defensiva, sus riesgos, prompts listos y un tutor IA interactivo.</p><span class="tag c">Nuevo</span></a>
+    <a class="card link reveal" href="ruta.html"><div class="icon">🗺️</div><h3>6 · Ruta y certificaciones</h3><p>Plan de 12 meses, certificaciones recomendadas por nivel y un quiz final para evaluar lo aprendido.</p><span class="tag r">Evaluación</span></a>
+  </div>
+</div></section>
+
+<section class="section"><div class="container">
+  <div class="grid g2" style="align-items:center;gap:50px">
+    <div class="reveal">
+      <span class="eyebrow">La gran analogía</span>
+      <h2>Defender una empresa es como proteger un castillo</h2>
+      <p class="muted">Ninguna defensa es perfecta por sí sola. Por eso se colocan <b>capas</b>: si el atacante supera una, la siguiente lo frena o lo detecta. A esto se le llama <b>defensa en profundidad</b>.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>En el castillo</th><th>En la empresa</th><th>Herramienta</th></tr></thead>
+        <tbody>
+          <tr><td>🌊 Foso y murallas</td><td>Perímetro de red</td><td>Firewall, VPN</td></tr>
+          <tr><td>💂 Guardias en la puerta</td><td>Control de acceso</td><td>MFA, IAM</td></tr>
+          <tr><td>📹 Cámaras</td><td>Registros de actividad</td><td>Logs, Sysmon</td></tr>
+          <tr><td>🧑‍✈️ Sala de vigilancia</td><td>Centro de operaciones</td><td>SOC + SIEM (Splunk)</td></tr>
+          <tr><td>🔔 Sensores de movimiento</td><td>Detección de intrusos</td><td>Suricata, Snort, EDR</td></tr>
+          <tr><td>🧯 Plan contra incendios</td><td>Respuesta a incidentes</td><td>Playbooks, backups</td></tr>
+        </tbody></table></div>
+    </div>
+    <figure class="diagram reveal" style="margin:0">
+      <svg viewBox="0 0 440 440" role="img" aria-label="Diagrama de capas de defensa en profundidad">
+        <g font-family="Inter" text-anchor="middle" font-weight="700">
+          <circle cx="220" cy="220" r="205" fill="#22d3ee" fill-opacity=".06" stroke="#22d3ee" stroke-opacity=".5"/>
+          <circle cx="220" cy="220" r="165" fill="#3b82f6" fill-opacity=".08" stroke="#3b82f6" stroke-opacity=".5"/>
+          <circle cx="220" cy="220" r="125" fill="#a78bfa" fill-opacity=".09" stroke="#a78bfa" stroke-opacity=".5"/>
+          <circle cx="220" cy="220" r="85" fill="#f59e0b" fill-opacity=".1" stroke="#f59e0b" stroke-opacity=".55"/>
+          <circle cx="220" cy="220" r="45" fill="#10b981" fill-opacity=".2" stroke="#10b981"/>
+          <text x="220" y="36" fill="#22d3ee" font-size="13">POLÍTICAS Y FORMACIÓN</text>
+          <text x="220" y="76" fill="#93c5fd" font-size="13">PERÍMETRO · FIREWALL</text>
+          <text x="220" y="116" fill="#c4b5fd" font-size="13">RED · IDS/IPS</text>
+          <text x="220" y="156" fill="#fcd34d" font-size="13">ENDPOINT · EDR</text>
+          <text x="220" y="216" fill="#6ee7b7" font-size="14">DATOS</text>
+          <text x="220" y="234" fill="#6ee7b7" font-size="11">cifrado</text>
+        </g>
+        <g class="pulse"><circle cx="420" cy="60" r="8" fill="#ef4444"/></g>
+        <path d="M414 66 L300 170" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6 6" class="flow"/>
+        <text x="300" y="188" font-family="JetBrains Mono" font-size="12" fill="#fca5a5">✖ bloqueado</text>
+      </svg>
+      <figcaption>Defensa en profundidad: el atacante debe superar todas las capas; nosotros solo necesitamos detectarlo en una.</figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<section class="section alt"><div class="container">
+  <span class="eyebrow">Carrera profesional</span>
+  <h2>La escalera del Blue Team</h2>
+  <p class="lead">Cada escalón responde a una pregunta más estratégica. Haz clic en cada perfil para ver el detalle completo.</p>
+  <figure class="diagram reveal">
+    <svg viewBox="0 0 1100 330" role="img" aria-label="Escalera de perfiles del Blue Team">
+      <g font-family="Inter">
+        <a href="perfiles.html#l1"><rect x="20" y="250" width="200" height="66" rx="12" fill="#0f182b" stroke="#10b981" stroke-width="2"/><text x="120" y="278" text-anchor="middle" fill="#6ee7b7" font-weight="800" font-size="15">JUNIOR · SOC L1</text><text x="120" y="300" text-anchor="middle" fill="#93a4c0" font-size="12">¿Esta alerta es real?</text></a>
+        <a href="perfiles.html#l2"><rect x="235" y="195" width="200" height="66" rx="12" fill="#0f182b" stroke="#22d3ee" stroke-width="2"/><text x="335" y="223" text-anchor="middle" fill="#67e8f9" font-weight="800" font-size="15">INTERMEDIO · L2 / IR</text><text x="335" y="245" text-anchor="middle" fill="#93a4c0" font-size="12">¿Qué pasó y hasta dónde?</text></a>
+        <a href="perfiles.html#hunter"><rect x="450" y="140" width="200" height="66" rx="12" fill="#0f182b" stroke="#3b82f6" stroke-width="2"/><text x="550" y="168" text-anchor="middle" fill="#93c5fd" font-weight="800" font-size="15">SENIOR · Hunter / DFIR</text><text x="550" y="190" text-anchor="middle" fill="#93a4c0" font-size="12">¿Qué no estamos viendo?</text></a>
+        <a href="perfiles.html#arq"><rect x="665" y="85" width="200" height="66" rx="12" fill="#0f182b" stroke="#a78bfa" stroke-width="2"/><text x="765" y="113" text-anchor="middle" fill="#c4b5fd" font-weight="800" font-size="15">LEAD · Manager / Arq.</text><text x="765" y="135" text-anchor="middle" fill="#93a4c0" font-size="12">¿Cómo escalamos?</text></a>
+        <a href="perfiles.html#ciso"><rect x="880" y="30" width="200" height="66" rx="12" fill="#0f182b" stroke="#f472b6" stroke-width="2"/><text x="980" y="58" text-anchor="middle" fill="#f9a8d4" font-weight="800" font-size="15">EJECUTIVO · CISO</text><text x="980" y="80" text-anchor="middle" fill="#93a4c0" font-size="12">¿Qué riesgo asumimos?</text></a>
+        <path d="M120 245 L120 228 L230 228" stroke="#2a3a5c" stroke-width="2" fill="none"/><path d="M335 190 L335 173 L445 173" stroke="#2a3a5c" stroke-width="2" fill="none"/><path d="M550 135 L550 118 L660 118" stroke="#2a3a5c" stroke-width="2" fill="none"/><path d="M765 80 L765 63 L875 63" stroke="#2a3a5c" stroke-width="2" fill="none"/>
+      </g>
+    </svg>
+    <figcaption>De táctico (resolver alertas) a estratégico (gestionar el riesgo del negocio).</figcaption>
+  </figure>
+</div></section>
+
+<section class="section"><div class="container">
+  <span class="eyebrow">Herramientas que dominarás</span>
+  <h2>Del escaneo a la inteligencia artificial</h2>
+  <div class="grid g4" style="margin-top:26px" id="tools"></div>
+</div></section>
+
+<section class="section alt"><div class="container">
+  <div class="grid g2" style="align-items:center;gap:40px">
+    <div class="reveal">
+      <span class="eyebrow">Inteligencia artificial</span>
+      <h2>La IA como copiloto del analista</h2>
+      <p class="muted">Aprende a usar modelos como <b>Claude</b> o <b>GPT</b> y agentes como <b>Claude Code</b> para triar alertas, decodificar comandos ofuscados, escribir consultas SPL y reglas Sigma, y automatizar tareas, sin caer en sus riesgos: alucinaciones, fuga de datos y <i>prompt injection</i>.</p>
+      <ul class="muted"><li>Tutor IA interactivo sobre ciberseguridad defensiva.</li><li>Analizador de logs que funciona en tu navegador.</li><li>Biblioteca de prompts para el SOC.</li></ul>
+      <a class="btn primary" href="ia.html">Explorar IA en el SOC →</a>
+    </div>
+    <div class="card reveal" style="font-family:var(--mono);font-size:.85rem">
+      <div class="muted" style="margin-bottom:8px">analista@soc:~/caso-412$ <span style="color:#fff">claude</span></div>
+      <div style="color:#67e8f9">&gt; Analiza auth.log y dime si hubo fuerza bruta con éxito</div>
+      <div style="margin-top:10px;color:#93a4c0">● Read(auth.log) ⎿ 48,211 líneas<br>● Bash(grep "Accepted" …)</div>
+      <div style="margin-top:10px;color:#fca5a5">⚠ 203.0.113.45 → 1.604 fallos · 27 usuarios · <b>ÉXITO: backup</b></div>
+      <div style="margin-top:10px;color:#6ee7b7">Recomendación: bloquear IP, deshabilitar 'backup', revisar actividad.</div>
+    </div>
+  </div>
+</div></section>
+
+<section class="section"><div class="container" style="text-align:center">
+  <h2>¿Listo para empezar?</h2>
+  <p class="lead" style="margin:0 auto 24px">Empieza por el primer video: en 10 minutos tendrás el mapa completo de la profesión.</p>
+  <a class="btn primary" href="videos.html#intro">▶ Ver lección 1: Ciberseguridad defensiva desde cero</a>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/common.js"></script>
+<script>
+const tools=[['🔦','Nmap','Descubrimiento de red','nmap'],['🩺','Nessus','Vulnerabilidades','nessus'],['🐷','Snort','IDS clásico','snort'],['🦦','Suricata','IDS/IPS moderno','suricata'],['🧠','Splunk','SIEM y SPL','splunk'],['📈','Zabbix','Monitorización','zabbix'],['🛰️','Shodan','Superficie externa','shodan'],['🕸️','Maltego','OSINT visual','maltego'],['🌐','tcpdump / Wireshark','Análisis de tráfico','redes'],['🧯','EDR · Sysmon · Velociraptor','Respuesta a incidentes','ir'],['🎯','MITRE ATT&CK · Sigma','Threat hunting','hunting'],['🤖','Claude · GPT · Claude Code','IA en el SOC','ia']];
+document.getElementById('tools').innerHTML=tools.map(t=>`<a class="card link reveal in" href="videos.html#${t[3]}"><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[2]}</p><span class="tag c">▶ ver video</span></a>`).join('');
+</script>
+</body>
+</html>

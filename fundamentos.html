@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fundamentos de ciberseguridad defensiva desde cero · Blue Team Academy</title>
+<meta name="description" content="Fundamentos de ciberseguridad explicados desde cero: tríada CIA, riesgo, amenazas, redes, logs, defensa en profundidad, SIEM, IDS, EDR, Cyber Kill Chain y MITRE ATT&CK.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css"><link rel="icon" href="assets/img/favicon.svg">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+<section class="page-hero"><div class="container">
+  <div class="breadcrumb">inicio / fundamentos</div>
+  <span class="eyebrow">Paso a paso · desde cero</span>
+  <h1>Fundamentos de la <span class="grad">ciberseguridad defensiva</span></h1>
+  <p class="lead">Si nunca has estudiado seguridad, empieza aquí. Cada concepto tiene una explicación sencilla, una analogía de la vida real, un ejemplo práctico y, cuando procede, un video.</p>
+</div></section>
+
+<section class="section"><div class="container with-toc">
+<nav class="toc">
+  <a href="#que-es">1. ¿Qué es defender?</a><a href="#cia">2. Tríada CIA</a><a href="#riesgo">3. Riesgo</a><a href="#amenazas">4. Amenazas</a><a href="#redes">5. Redes básicas</a><a href="#logs">6. Logs</a><a href="#capas">7. Defensa en profundidad</a><a href="#herramientas">8. SIEM, IDS, EDR, SOAR</a><a href="#killchain">9. Kill Chain y ATT&amp;CK</a><a href="#ir">10. Respuesta a incidentes</a><a href="#glosario">11. Glosario</a>
+</nav>
+<article class="article">
+
+<h2 id="que-es">1. ¿Qué significa “defender”?</h2>
+<p>La <b>ciberseguridad defensiva</b> (o <i>Blue Team</i>) es el conjunto de personas, procesos y tecnologías que <b>protegen</b> los sistemas de una organización, <b>detectan</b> a los atacantes y <b>responden</b> cuando algo ocurre. No se trata de “poner un antivirus”, sino de construir un sistema completo que funcione 24/7.</p>
+<div class="callout analogy"><div class="ct">💡 Analogía</div><p>Piensa en la seguridad de un banco: hay puertas blindadas (<b>prevenir</b>), cámaras y alarmas (<b>detectar</b>), vigilantes que actúan (<b>responder</b>) y un seguro y planes para reabrir mañana (<b>recuperar</b>). Ningún banco confía solo en la puerta.</p></div>
+<p>Hay una asimetría importante: <b>el atacante solo necesita acertar una vez; el defensor necesita detectarlo a tiempo</b>. Por eso la detección y la respuesta rápida son tan importantes como la prevención.</p>
+
+<h2 id="cia">2. La tríada CIA: lo que protegemos</h2>
+<div class="grid g2" style="align-items:center">
+<figure class="diagram" style="margin:0"><svg viewBox="0 0 400 340" role="img" aria-label="Triángulo CIA">
+  <polygon points="200,30 370,310 30,310" fill="rgba(34,211,238,.06)" stroke="#22d3ee" stroke-width="3"/>
+  <g font-family="Inter" text-anchor="middle" font-weight="800">
+    <circle cx="200" cy="30" r="26" fill="#0f182b" stroke="#a78bfa" stroke-width="3"/><text x="200" y="38" fill="#c4b5fd" font-size="22">C</text><text x="200" y="80" fill="#c4b5fd" font-size="14">Confidencialidad</text>
+    <circle cx="370" cy="310" r="26" fill="#0f182b" stroke="#10b981" stroke-width="3"/><text x="370" y="318" fill="#6ee7b7" font-size="22">I</text><text x="320" y="270" fill="#6ee7b7" font-size="14">Integridad</text>
+    <circle cx="30" cy="310" r="26" fill="#0f182b" stroke="#f59e0b" stroke-width="3"/><text x="30" y="318" fill="#fcd34d" font-size="22">A</text><text x="85" y="270" fill="#fcd34d" font-size="14">Disponibilidad</text>
+    <text x="200" y="205" fill="#e6edf7" font-size="16">🔐 Información</text>
+  </g></svg><figcaption>Los tres pilares de la seguridad de la información.</figcaption></figure>
+<div>
+<ul>
+<li><b>Confidencialidad</b>: solo quien está autorizado puede ver la información. <i>Como un sobre cerrado.</i></li>
+<li><b>Integridad</b>: la información no se altera sin que lo sepamos. <i>Como un sello de lacre.</i></li>
+<li><b>Disponibilidad</b>: los sistemas funcionan cuando se necesitan. <i>Como un cajero que siempre da dinero.</i></li>
+</ul>
+</div></div>
+<div class="table-wrap"><table><thead><tr><th>Ataque</th><th>Pilar afectado</th><th>Control que lo mitiga</th></tr></thead><tbody>
+<tr><td>Robo de una base de datos de clientes</td><td><span class="tag p">C</span></td><td>Cifrado, control de acceso, DLP</td></tr>
+<tr><td>Cambiar el IBAN en una factura (fraude BEC)</td><td><span class="tag g">I</span></td><td>Firmas digitales, verificación por otro canal</td></tr>
+<tr><td>Ransomware cifra los servidores</td><td><span class="tag y">A</span> (+C si roban datos)</td><td>Backups inmutables, EDR, segmentación</td></tr>
+<tr><td>Ataque DDoS a la web</td><td><span class="tag y">A</span></td><td>CDN / anti-DDoS, escalado</td></tr>
+</tbody></table></div>
+
+<h2 id="riesgo">3. Riesgo: el idioma de la seguridad</h2>
+<p>No podemos proteger todo al 100 %. Por eso priorizamos por <b>riesgo</b>:</p>
+<pre><code>Riesgo = Probabilidad (amenaza × vulnerabilidad) × Impacto</code></pre>
+<div class="grid g2" style="align-items:center">
+<div>
+<p><b>Ejemplo:</b> un servidor web con una vulnerabilidad crítica (<i>vulnerabilidad alta</i>), expuesto a Internet y con exploits públicos (<i>amenaza alta</i>), que guarda datos de clientes (<i>impacto alto</i>) → <b>riesgo crítico</b>: se corrige hoy.</p>
+<p>El mismo fallo en un equipo de laboratorio aislado y sin datos → riesgo bajo.</p>
+<p>Ante un riesgo hay 4 opciones: <b>mitigar</b> (poner controles), <b>transferir</b> (seguro), <b>evitar</b> (dejar de hacer la actividad) o <b>aceptar</b> (decisión documentada de dirección).</p>
+</div>
+<figure class="diagram" style="margin:0"><svg viewBox="0 0 360 330" role="img" aria-label="Matriz de riesgo">
+  <g font-family="Inter" font-size="12" text-anchor="middle" font-weight="700">
+  <rect x="60" y="20" width="90" height="90" fill="#f59e0b" fill-opacity=".55"/><rect x="150" y="20" width="90" height="90" fill="#ef4444" fill-opacity=".6"/><rect x="240" y="20" width="90" height="90" fill="#ef4444" fill-opacity=".9"/>
+  <rect x="60" y="110" width="90" height="90" fill="#10b981" fill-opacity=".5"/><rect x="150" y="110" width="90" height="90" fill="#f59e0b" fill-opacity=".55"/><rect x="240" y="110" width="90" height="90" fill="#ef4444" fill-opacity=".6"/>
+  <rect x="60" y="200" width="90" height="90" fill="#10b981" fill-opacity=".35"/><rect x="150" y="200" width="90" height="90" fill="#10b981" fill-opacity=".5"/><rect x="240" y="200" width="90" height="90" fill="#f59e0b" fill-opacity=".55"/>
+  <text x="105" y="70" fill="#fff">Medio</text><text x="195" y="70" fill="#fff">Alto</text><text x="285" y="70" fill="#fff">Crítico</text>
+  <text x="105" y="160" fill="#fff">Bajo</text><text x="195" y="160" fill="#fff">Medio</text><text x="285" y="160" fill="#fff">Alto</text>
+  <text x="105" y="250" fill="#fff">Bajo</text><text x="195" y="250" fill="#fff">Bajo</text><text x="285" y="250" fill="#fff">Medio</text>
+  <text x="195" y="318" fill="#93a4c0">IMPACTO →</text><text x="22" y="160" fill="#93a4c0" transform="rotate(-90 22 160)">PROBABILIDAD →</text></g>
+</svg><figcaption>Matriz de riesgo 3×3: probabilidad × impacto.</figcaption></figure>
+</div>
+
+<h2 id="amenazas">4. Las amenazas más comunes</h2>
+<div class="table-wrap"><table><thead><tr><th>Amenaza</th><th>Explicación sencilla</th><th>Analogía</th><th>Cómo se detecta</th></tr></thead><tbody>
+<tr><td>🎣 Phishing</td><td>Correo o mensaje falso para robar credenciales o instalar malware</td><td>Un timador disfrazado de cartero</td><td>Pasarela de correo, reportes de usuarios, URL nuevas</td></tr>
+<tr><td>🔐 Ransomware</td><td>Malware que cifra los datos y pide rescate (y a menudo los roba antes)</td><td>Un secuestrador que cambia la cerradura de tu casa</td><td>EDR, Sysmon, borrado de shadow copies, cifrado masivo</td></tr>
+<tr><td>🔑 Robo de credenciales</td><td>Fuerza bruta, password spraying, infostealers</td><td>Probar llaves hasta que una abre</td><td>Eventos 4625/4624, logins imposibles</td></tr>
+<tr><td>🧬 Malware / troyano</td><td>Software malicioso que da control al atacante (C2)</td><td>Un caballo de Troya con soldados dentro</td><td>IDS, beaconing, reputación de dominios</td></tr>
+<tr><td>🌊 DDoS</td><td>Saturar un servicio con tráfico</td><td>Mil coches bloqueando la entrada de una tienda</td><td>Monitorización de tráfico (Zabbix), proveedor anti-DDoS</td></tr>
+<tr><td>🕳️ Explotación de vulnerabilidades</td><td>Aprovechar un fallo de software sin parchear</td><td>Una ventana que no cierra bien</td><td>Nessus, IDS/WAF, parcheo</td></tr>
+<tr><td>👤 Amenaza interna</td><td>Empleado malintencionado o negligente</td><td>El ladrón ya tiene llave</td><td>UEBA, DLP, revisión de accesos</td></tr>
+</tbody></table></div>
+
+<h2 id="redes">5. Redes básicas para defensores</h2>
+<p>Cada equipo tiene una <b>dirección IP</b> (como la dirección de un edificio) y cada servicio escucha en un <b>puerto</b> (como el número de piso). Los datos viajan en <b>paquetes</b>.</p>
+<a class="mini-video" href="videos.html#redes"><span class="pb">▶</span><span><b>Video: Redes para defensores (tcpdump y Wireshark)</b><small>Lección 2 · captura y análisis de tráfico paso a paso</small></span></a>
+<div class="table-wrap"><table><thead><tr><th>Capa TCP/IP</th><th>Qué hace</th><th>Ejemplos</th><th>Ataques típicos</th></tr></thead><tbody>
+<tr><td>Aplicación</td><td>Lo que usa el usuario</td><td>HTTP, DNS, SMTP, SSH, SMB</td><td>Phishing, SQLi, túneles DNS</td></tr>
+<tr><td>Transporte</td><td>Conexiones entre programas (puertos)</td><td>TCP, UDP</td><td>Escaneo de puertos, SYN flood</td></tr>
+<tr><td>Red</td><td>Llevar paquetes entre redes (IP)</td><td>IPv4, IPv6, ICMP</td><td>Spoofing, DDoS</td></tr>
+<tr><td>Enlace</td><td>La red local física</td><td>Ethernet, Wi-Fi, ARP</td><td>ARP spoofing, rogue AP</td></tr>
+</tbody></table></div>
+<figure class="diagram"><svg viewBox="0 0 900 260" role="img" aria-label="Handshake TCP">
+  <g font-family="Inter" font-size="15" fill="#e6edf7">
+    <rect x="40" y="20" width="160" height="50" rx="10" fill="#0f182b" stroke="#22d3ee"/><text x="120" y="51" text-anchor="middle">💻 Cliente</text>
+    <rect x="700" y="20" width="160" height="50" rx="10" fill="#0f182b" stroke="#a78bfa"/><text x="780" y="51" text-anchor="middle">🖥️ Servidor :443</text>
+    <line x1="120" y1="70" x2="120" y2="250" stroke="#2a3a5c" stroke-dasharray="4 4"/><line x1="780" y1="70" x2="780" y2="250" stroke="#2a3a5c" stroke-dasharray="4 4"/>
+    <path d="M120 105 L775 135" stroke="#22d3ee" stroke-width="3" class="flow"/><text x="440" y="110" fill="#67e8f9" font-family="JetBrains Mono">1 · SYN  “¿hablamos?”</text>
+    <path d="M780 160 L125 190" stroke="#a78bfa" stroke-width="3" class="flow"/><text x="440" y="165" fill="#c4b5fd" font-family="JetBrains Mono">2 · SYN-ACK  “sí”</text>
+    <path d="M120 215 L775 240" stroke="#10b981" stroke-width="3" class="flow"/><text x="440" y="220" fill="#6ee7b7" font-family="JetBrains Mono">3 · ACK  “conectados”</text>
+  </g></svg><figcaption>Un escaneo SYN envía el paso 1 a miles de puertos y nunca completa el paso 3: esa es su huella.</figcaption></figure>
+
+<h2 id="logs">6. Logs: las cámaras de seguridad digitales</h2>
+<p>Un <b>log</b> es un registro de algo que ocurrió: un inicio de sesión, un proceso ejecutado, una conexión. Sin logs, el SOC está ciego. Veamos un log real de Linux, anotado:</p>
+<pre><code>Nov 26 10:14:02 web01 sshd[2231]: Failed password for root from 203.0.113.45 port 50122 ssh2
+│               │     │           │                    │         │
+fecha/hora      host  proceso     qué pasó             usuario   IP de origen</code></pre>
+<p>Y el equivalente en Windows (Visor de eventos → Seguridad):</p>
+<pre><code>EventID: 4625   (An account failed to log on)
+TargetUserName: administrador     LogonType: 3 (red)
+IpAddress: 192.168.56.77          FailureReason: Unknown user name or bad password</code></pre>
+<div class="table-wrap"><table><thead><tr><th>Fuente de logs</th><th>Qué nos cuenta</th><th>Prioridad</th></tr></thead><tbody>
+<tr><td>Directorio Activo / Entra ID</td><td>Quién inicia sesión, dónde y cuándo</td><td><span class="tag r">Crítica</span></td></tr>
+<tr><td>EDR / Sysmon</td><td>Procesos, conexiones y ficheros en cada equipo</td><td><span class="tag r">Crítica</span></td></tr>
+<tr><td>Firewall / Proxy / DNS</td><td>Qué entra y sale de la red</td><td><span class="tag y">Alta</span></td></tr>
+<tr><td>IDS (Suricata/Snort)</td><td>Tráfico que coincide con ataques conocidos</td><td><span class="tag y">Alta</span></td></tr>
+<tr><td>Correo (M365, Google)</td><td>Phishing, reglas de reenvío sospechosas</td><td><span class="tag y">Alta</span></td></tr>
+<tr><td>Cloud (CloudTrail, Azure Activity)</td><td>Cambios en la infraestructura cloud</td><td><span class="tag y">Alta</span></td></tr>
+</tbody></table></div>
+
+<h2 id="capas">7. Defensa en profundidad y tipos de controles</h2>
+<p>Se colocan <b>varias capas</b> de protección para que, si una falla, otra frene o detecte al atacante. Además, los controles se clasifican por su función:</p>
+<div class="grid g3">
+<div class="card"><div class="icon">🛡️</div><h3>Preventivos</h3><p>Evitan que ocurra: MFA, firewall, parches, mínimo privilegio, bloqueo de macros.</p></div>
+<div class="card"><div class="icon">🔔</div><h3>Detectivos</h3><p>Avisan de que está ocurriendo: SIEM, IDS, EDR, Zabbix, auditoría.</p></div>
+<div class="card"><div class="icon">🧯</div><h3>Correctivos</h3><p>Reparan tras el incidente: backups, reinstalación, rotación de credenciales.</p></div>
+</div>
+<div class="callout"><div class="ct">🎯 Principios clave</div><p><b>Mínimo privilegio</b> (cada uno solo con los permisos que necesita) · <b>Zero Trust</b> (“nunca confíes, verifica siempre”) · <b>Segmentación</b> (que una infección no llegue a todo) · <b>Asumir brecha</b> (diseña pensando que ya entraron).</p></div>
+
+<h2 id="herramientas">8. SIEM, IDS/IPS, EDR y SOAR</h2>
+<div class="table-wrap"><table><thead><tr><th>Tecnología</th><th>Qué es</th><th>Analogía</th><th>Ejemplos</th><th>Video</th></tr></thead><tbody>
+<tr><td><b>SIEM</b></td><td>Centraliza y correlaciona logs de todo; genera alertas</td><td>La sala de cámaras con buscador</td><td>Splunk, Microsoft Sentinel, Elastic, Wazuh, QRadar</td><td><a href="videos.html#splunk">▶ Splunk</a></td></tr>
+<tr><td><b>IDS / IPS</b></td><td>Inspecciona el tráfico de red y alerta/bloquea ataques</td><td>Detector de metales en la entrada</td><td>Suricata, Snort, Zeek (NSM)</td><td><a href="videos.html#suricata">▶ Suricata</a> · <a href="videos.html#snort">▶ Snort</a></td></tr>
+<tr><td><b>EDR / XDR</b></td><td>Vigila procesos en cada equipo y permite aislarlo</td><td>Un guardaespaldas por empleado</td><td>Microsoft Defender, CrowdStrike, SentinelOne</td><td><a href="videos.html#ir">▶ Respuesta</a></td></tr>
+<tr><td><b>SOAR</b></td><td>Automatiza respuestas con playbooks</td><td>Piloto automático</td><td>Shuffle, Cortex XSOAR, Splunk SOAR</td><td>—</td></tr>
+<tr><td><b>Escáner de vulnerabilidades</b></td><td>Busca fallos conocidos (CVE)</td><td>Chequeo médico</td><td>Nessus, OpenVAS, Qualys</td><td><a href="videos.html#nessus">▶ Nessus</a></td></tr>
+<tr><td><b>Monitorización</b></td><td>Métricas de disponibilidad y rendimiento</td><td>Monitor de constantes vitales</td><td>Zabbix, Prometheus, Nagios</td><td><a href="videos.html#zabbix">▶ Zabbix</a></td></tr>
+</tbody></table></div>
+
+<h2 id="killchain">9. Cyber Kill Chain y MITRE ATT&amp;CK</h2>
+<p>Los ataques siguen fases. Conocerlas permite <b>cortar la cadena</b> en cualquier eslabón. El modelo clásico es la <b>Cyber Kill Chain</b> de Lockheed Martin:</p>
+<figure class="diagram"><svg viewBox="0 0 1000 200" role="img" aria-label="Cyber Kill Chain">
+  <g font-family="Inter" text-anchor="middle" font-size="13" font-weight="700">
+  <g><rect x="5" y="50" width="130" height="80" rx="10" fill="#0f182b" stroke="#22d3ee"/><text x="70" y="85" font-size="22">🔭</text><text x="70" y="112" fill="#e6edf7">1 Reconocimiento</text></g>
+  <g><rect x="145" y="50" width="130" height="80" rx="10" fill="#0f182b" stroke="#22d3ee"/><text x="210" y="85" font-size="22">🧪</text><text x="210" y="112" fill="#e6edf7">2 Armamento</text></g>
+  <g><rect x="285" y="50" width="130" height="80" rx="10" fill="#0f182b" stroke="#3b82f6"/><text x="350" y="85" font-size="22">📧</text><text x="350" y="112" fill="#e6edf7">3 Entrega</text></g>
+  <g><rect x="425" y="50" width="130" height="80" rx="10" fill="#0f182b" stroke="#a78bfa"/><text x="490" y="85" font-size="22">💥</text><text x="490" y="112" fill="#e6edf7">4 Explotación</text></g>
+  <g><rect x="565" y="50" width="130" height="80" rx="10" fill="#0f182b" stroke="#f59e0b"/><text x="630" y="85" font-size="22">🧷</text><text x="630" y="112" fill="#e6edf7">5 Instalación</text></g>
+  <g><rect x="705" y="50" width="130" height="80" rx="10" fill="#0f182b" stroke="#f97316"/><text x="770" y="85" font-size="22">📡</text><text x="770" y="112" fill="#e6edf7">6 Mando y control</text></g>
+  <g><rect x="845" y="50" width="150" height="80" rx="10" fill="#0f182b" stroke="#ef4444"/><text x="920" y="85" font-size="22">🎯</text><text x="920" y="112" fill="#e6edf7">7 Acciones</text></g>
+  <text x="500" y="170" fill="#93a4c0" font-weight="500">Cuanto antes cortes la cadena, menor es el daño</text>
+  </g></svg></figure>
+<p><b>MITRE ATT&amp;CK</b> es más detallado: una base de conocimiento pública con <b>14 tácticas</b> (el “para qué”) y cientos de <b>técnicas</b> (el “cómo”), cada una con un identificador como <code>T1059</code> (intérpretes de comandos) o <code>T1486</code> (cifrado de datos / ransomware). Es el idioma común entre analistas, herramientas e informes.</p>
+<a class="mini-video" href="videos.html#hunting"><span class="pb">▶</span><span><b>Video: Threat Hunting con MITRE ATT&amp;CK y Sigma</b><small>Lección 12 · tácticas, Pirámide del Dolor y caza práctica</small></span></a>
+
+<h2 id="ir">10. Respuesta a incidentes en 4 fases (NIST)</h2>
+<ol class="steps">
+<li><h4>Preparación</h4><p class="muted">Playbooks, contactos, herramientas, backups probados, simulacros. Lo que hagas aquí decide cómo irá todo lo demás.</p></li>
+<li><h4>Detección y análisis</h4><p class="muted">Confirmar que es real, clasificar la severidad, construir la línea temporal y el alcance.</p></li>
+<li><h4>Contención, erradicación y recuperación</h4><p class="muted">Aislar equipos, bloquear IPs/cuentas, eliminar persistencias, reinstalar, restaurar y vigilar.</p></li>
+<li><h4>Actividad post-incidente</h4><p class="muted">Lecciones aprendidas sin culpables, nuevas detecciones y mejoras de controles.</p></li>
+</ol>
+<a class="mini-video" href="videos.html#ir"><span class="pb">▶</span><span><b>Video: Respuesta a incidentes paso a paso</b><small>Lección 11 · caso completo de phishing a ransomware (11 min)</small></span></a>
+
+<h2 id="glosario">11. Glosario esencial</h2>
+<details><summary>IOC (Indicador de Compromiso)</summary><div>Dato observable que indica un ataque: un hash de malware, una IP, un dominio, un nombre de fichero. Útil, pero fácil de cambiar para el atacante.</div></details>
+<details><summary>TTP (Tácticas, Técnicas y Procedimientos)</summary><div>La forma de actuar del atacante. Detectar TTPs es más robusto que detectar IOCs (ver Pirámide del Dolor).</div></details>
+<details><summary>Falso positivo / falso negativo</summary><div>Falso positivo: alerta que no era un ataque. Falso negativo: ataque que no generó alerta (el más peligroso).</div></details>
+<details><summary>MTTD / MTTR</summary><div>Tiempo medio de detección y tiempo medio de respuesta. Las dos métricas más usadas para medir un SOC.</div></details>
+<details><summary>CVE / CVSS / EPSS / KEV</summary><div>CVE: identificador de una vulnerabilidad. CVSS: su gravedad (0–10). EPSS: probabilidad de explotación. KEV: catálogo de CISA de vulnerabilidades explotadas activamente.</div></details>
+<details><summary>C2 (Command & Control)</summary><div>Servidor desde el que el atacante controla los equipos infectados. El “latido” periódico hacia él se llama beaconing.</div></details>
+<details><summary>Movimiento lateral</summary><div>Cuando el atacante salta de un equipo comprometido a otros de la red (SMB, RDP, WinRM, PsExec).</div></details>
+<details><summary>Hardening</summary><div>Endurecer un sistema: quitar servicios innecesarios, aplicar configuraciones seguras (CIS Benchmarks), parches.</div></details>
+<details><summary>Playbook / Runbook</summary><div>Guía paso a paso de qué hacer ante un tipo de alerta o incidente.</div></details>
+<details><summary>Zero Trust</summary><div>Modelo que no confía en nada por estar “dentro” de la red: verifica identidad, dispositivo y contexto en cada acceso.</div></details>
+
+<div class="callout ok" style="margin-top:40px"><div class="ct">✅ Siguiente paso</div><p>Ya tienes la base. Ahora conoce los <a href="perfiles.html">perfiles profesionales</a> o salta directamente a los <a href="videos.html">videos prácticos</a>.</p></div>
+</article>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/common.js"></script>
+</body>
+</html>

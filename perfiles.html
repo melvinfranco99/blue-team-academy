@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perfiles de ciberseguridad defensiva: de Junior a CISO · Blue Team Academy</title>
+<meta name="description" content="Perfiles del Blue Team explicados: analista SOC L1 junior, L2, threat hunter, DFIR, detection engineer, security engineer, arquitecto, SOC manager y CISO.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css"><link rel="icon" href="assets/img/favicon.svg">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+<section class="page-hero"><div class="container">
+  <div class="breadcrumb">inicio / perfiles</div>
+  <span class="eyebrow">Carrera profesional</span>
+  <h1>Perfiles de la <span class="grad">ciberseguridad defensiva</span></h1>
+  <p class="lead">Qué hace cada perfil, cómo es su día, qué herramientas usa, qué debe saber, cuánto gana aproximadamente y cómo pasar al siguiente nivel. Explicado sin tecnicismos y con analogías.</p>
+  <a class="mini-video" href="videos.html#intro"><span class="pb">▶</span><span><b>Video recomendado: Ciberseguridad defensiva desde cero y los perfiles del Blue Team</b><small>Lección 1 · 10 min · narrado con diagramas animados</small></span></a>
+</div></section>
+
+<section class="section"><div class="container">
+  <span class="eyebrow">Visión general</span>
+  <h2>Comparativa rápida de perfiles</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Perfil</th><th>Nivel</th><th>Experiencia</th><th>Enfoque</th><th>Herramientas principales</th><th>Salario orientativo (España)*</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#l1">Analista SOC L1</a></td><td><span class="tag g">Junior</span></td><td>0–2 años</td><td>Triaje de alertas</td><td>SIEM, ticketing, VirusTotal</td><td>22.000 – 30.000 €</td></tr>
+      <tr><td><a href="#l2">Analista SOC L2 / Incident Responder</a></td><td><span class="tag c">Intermedio</span></td><td>2–4 años</td><td>Investigación y contención</td><td>SIEM, EDR, Sysmon, Wireshark</td><td>30.000 – 42.000 €</td></tr>
+      <tr><td><a href="#hunter">Threat Hunter</a></td><td><span class="tag p">Senior</span></td><td>4–7 años</td><td>Búsqueda proactiva</td><td>ATT&amp;CK, SPL/KQL, Zeek, EDR</td><td>42.000 – 60.000 €</td></tr>
+      <tr><td><a href="#dfir">Analista DFIR</a></td><td><span class="tag p">Senior</span></td><td>4–7 años</td><td>Forense y respuesta</td><td>Volatility, KAPE, Velociraptor</td><td>42.000 – 62.000 €</td></tr>
+      <tr><td><a href="#det">Detection Engineer</a></td><td><span class="tag p">Senior</span></td><td>4–8 años</td><td>Crear y probar detecciones</td><td>Sigma, Git, CI, Atomic Red Team</td><td>45.000 – 65.000 €</td></tr>
+      <tr><td><a href="#eng">Security Engineer</a></td><td><span class="tag p">Senior</span></td><td>3–8 años</td><td>Construir y endurecer la plataforma</td><td>Firewalls, EDR, IaC, Python, SOAR</td><td>40.000 – 62.000 €</td></tr>
+      <tr><td><a href="#arq">SOC Manager / Arquitecto</a></td><td><span class="tag r">Lead</span></td><td>7+ años</td><td>Personas, procesos y diseño</td><td>Métricas, Zero Trust, frameworks</td><td>55.000 – 85.000 €</td></tr>
+      <tr><td><a href="#ciso">CISO</a></td><td><span class="tag y">Ejecutivo</span></td><td>10+ años</td><td>Estrategia y riesgo</td><td>ISO 27001, NIST CSF, ENS, NIS2</td><td>80.000 – 150.000 € +</td></tr>
+    </tbody></table></div>
+  <p class="muted" style="font-size:.85rem">* Rangos brutos anuales orientativos para España; varían mucho según ciudad, sector, empresa, turnos/guardias e idiomas. En remoto internacional pueden ser superiores. Úsalos solo como referencia.</p>
+
+  <div class="callout analogy"><div class="ct">🏥 Analogía: el hospital</div><p>El <b>L1</b> es la enfermera de triaje en urgencias; el <b>L2</b>, el médico que hace pruebas; el <b>DFIR</b>, el cirujano y el forense; el <b>Threat Hunter</b>, la medicina preventiva que busca enfermedades sin síntomas; el <b>Detection Engineer</b>, quien diseña los análisis automáticos; el <b>Arquitecto</b>, quien diseña el hospital; y el <b>CISO</b>, el director médico que responde ante el consejo.</p></div>
+</div></section>
+
+<section class="section alt"><div class="container" id="profiles"></div></section>
+
+<section class="section"><div class="container">
+  <span class="eyebrow">Habilidades transversales</span>
+  <h2>Lo que todos los perfiles necesitan</h2>
+  <div class="grid g4" style="margin-top:20px">
+    <div class="card reveal"><div class="icon">🗣️</div><h3>Comunicación</h3><p>Escribir tickets e informes claros. Un hallazgo mal explicado es un hallazgo ignorado.</p></div>
+    <div class="card reveal"><div class="icon">🧩</div><h3>Pensamiento analítico</h3><p>Formular hipótesis, buscar evidencias y no sacar conclusiones antes de tiempo.</p></div>
+    <div class="card reveal"><div class="icon">📖</div><h3>Aprendizaje continuo</h3><p>Las amenazas cambian cada mes. Lee informes, haz laboratorios y CTFs defensivos.</p></div>
+    <div class="card reveal"><div class="icon">⚖️</div><h3>Ética</h3><p>Acceso privilegiado implica responsabilidad: confidencialidad y actuar siempre con autorización.</p></div>
+  </div>
+  <h3 style="margin-top:40px">Otras especialidades defensivas</h3>
+  <div class="table-wrap"><table><thead><tr><th>Especialidad</th><th>Qué hace</th></tr></thead><tbody>
+    <tr><td>GRC (Gobierno, Riesgo y Cumplimiento)</td><td>Políticas, análisis de riesgos, auditorías ISO 27001 / ENS / NIS2.</td></tr>
+    <tr><td>Cloud Security</td><td>Seguridad en AWS, Azure y GCP: identidades, configuraciones, CSPM.</td></tr>
+    <tr><td>AppSec / DevSecOps</td><td>Seguridad del software: revisión de código, SAST/DAST, pipelines seguros.</td></tr>
+    <tr><td>Cyber Threat Intelligence (CTI)</td><td>Estudia a los grupos atacantes y convierte la inteligencia en defensa.</td></tr>
+    <tr><td>IAM</td><td>Gestión de identidades y accesos: MFA, privilegios, ciclo de vida de cuentas.</td></tr>
+    <tr><td>OT / ICS Security</td><td>Seguridad industrial: fábricas, energía, infraestructuras críticas.</td></tr>
+  </tbody></table></div>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script>
+const P = [
+ {id:'l1',lvl:1,badge:'JUNIOR · NIVEL 1',icon:'👩‍💻',name:'Analista SOC L1 (Tier 1)',
+  ana:'Es el <b>vigilante de la sala de cámaras</b>: mira muchas pantallas, distingue lo normal de lo raro y, si ve algo serio, llama al supervisor con la grabación exacta.',
+  what:'Monitoriza la cola de alertas del SIEM, hace el triaje inicial (¿verdadero o falso positivo?), enriquece con contexto (reputación de IP, usuario, equipo), documenta en el ticket y escala al L2 siguiendo los playbooks.',
+  day:[['08:00','Relevo de turno: leer tickets abiertos del turno anterior'],['08:30','Cola de alertas: fuerza bruta, malware, accesos raros'],['11:00','Reporte de phishing de un empleado: analizar cabeceras y URL'],['13:00','Escalar alerta crítica al L2 con evidencias'],['15:00','Proponer ajuste de una regla con muchos falsos positivos'],['16:00','Documentar y hacer relevo']],
+  skills:[['Redes TCP/IP',80],['Logs Windows y Linux',75],['Uso del SIEM (SPL/KQL básico)',70],['Conocimiento de ataques comunes',65],['Scripting básico',35]],
+  tools:['Splunk / Sentinel / Wazuh','VirusTotal, AbuseIPDB','Wireshark','Ticketing (Jira, TheHive)','CyberChef'],
+  certs:['CompTIA Security+','Blue Team Level 1 (BTL1)','ISC2 CC','Splunk Core Certified User','Microsoft SC-200 (inicial)'],
+  next:'Domina las investigaciones de principio a fin, aprende MITRE ATT&CK, practica con EDR y empieza a automatizar con Python.',
+  videos:['intro','redes','splunk']},
+ {id:'l2',lvl:2,badge:'INTERMEDIO · NIVEL 2',icon:'🕵️',name:'Analista SOC L2 / Incident Responder',
+  ana:'Es el <b>detective</b>: recibe el caso del vigilante, reconstruye qué pasó, quién, cuándo y cómo, y decide cómo frenar al intruso.',
+  what:'Investiga en profundidad las alertas escaladas, construye líneas temporales, determina el alcance, ejecuta la contención (aislar equipos, bloquear cuentas e IPs), coordina con sistemas y mentoriza a los L1.',
+  day:[['09:00','Revisar escalados de la noche'],['10:00','Investigar ejecución de PowerShell ofuscado en un portátil'],['12:00','Aislar el equipo desde el EDR y bloquear el C2'],['14:00','Línea temporal en el SIEM y alcance'],['16:00','Informe del incidente y propuesta de mejoras'],['17:00','Sesión de mentoría con L1']],
+  skills:[['Investigación de incidentes',85],['EDR y Sysmon',75],['MITRE ATT&CK',75],['SPL / KQL avanzado',80],['Python / PowerShell',55]],
+  tools:['SIEM avanzado','EDR (Defender, CrowdStrike, SentinelOne)','Sysmon','Zeek / Suricata','TheHive / SOAR'],
+  certs:['CompTIA CySA+','BTL2 / HTB CDSA','GIAC GCIH','Microsoft SC-200','eCIR / eCTHP'],
+  next:'Especialízate: forense (DFIR), hunting o ingeniería de detección. Aprende a programar con soltura y a escribir detecciones.',
+  videos:['suricata','splunk','ir']},
+ {id:'hunter',lvl:3,badge:'SENIOR · PROACTIVO',icon:'🎯',name:'Threat Hunter',
+  ana:'Es el <b>cazador</b>: no espera a que salte la trampa, sale al bosque a buscar huellas sabiendo cómo se mueve la presa.',
+  what:'Formula hipótesis basadas en inteligencia y ATT&CK (p. ej., “un atacante persiste con tareas programadas”), las comprueba con datos (stacking, análisis de frecuencia, beaconing) y convierte lo encontrado en nuevas detecciones.',
+  day:[['09:00','Leer informes de inteligencia sobre un grupo de ransomware'],['10:00','Hipótesis: uso de RDP interno fuera de horario'],['11:00','Consultas de stacking en el SIEM y EDR'],['14:00','Hallazgo: tarea programada rara en 2 equipos → incidente'],['16:00','Escribir regla Sigma para automatizarlo']],
+  skills:[['Hunting por hipótesis',90],['MITRE ATT&CK',90],['Consultas avanzadas',85],['Estadística básica',60],['Python',70]],
+  tools:['SIEM / data lake','EDR con telemetría completa','Zeek','Jupyter + Python','MITRE ATT&CK Navigator'],
+  certs:['GIAC GCFA (SANS FOR508)','GIAC GCTI (SANS FOR578)','eCTHP','HTB CDSA'],
+  next:'Lidera programas de hunting, mide la cobertura ATT&CK y forma al equipo.',
+  videos:['hunting','redes','suricata']},
+ {id:'dfir',lvl:3,badge:'SENIOR · FORENSE',icon:'🔬',name:'Analista DFIR (Forense digital y respuesta)',
+  ana:'Es el <b>forense de la escena del crimen</b>: preserva la evidencia sin contaminarla y reconstruye exactamente lo ocurrido, con validez legal.',
+  what:'Responde a incidentes graves: captura memoria RAM y discos, analiza artefactos (prefetch, registro, MFT, eventos), analiza malware de forma básica, mantiene la cadena de custodia y redacta informes técnicos y ejecutivos.',
+  day:[['—','Días tranquilos: preparación, playbooks, simulacros, tooling'],['—','Días de incidente: captura RAM, análisis con Volatility, línea temporal maestra'],['—','Coordinación con legal, aseguradora y autoridades'],['—','Informe final y lecciones aprendidas']],
+  skills:[['Forense Windows',90],['Forense de memoria',80],['Análisis de malware básico',65],['Cadena de custodia',80],['Redacción de informes',85]],
+  tools:['Volatility 3','KAPE, Velociraptor','FTK Imager, Autopsy','Eric Zimmerman tools','Plaso / Timesketch'],
+  certs:['GIAC GCFA / GCFE','SANS FOR508 / FOR500','CHFI','Magnet / EnCase'],
+  next:'Lidera equipos de respuesta (IR Lead) o especialízate en análisis de malware / reversing.',
+  videos:['ir']},
+ {id:'det',lvl:3,badge:'SENIOR · INGENIERÍA',icon:'🧪',name:'Detection Engineer',
+  ana:'Es el <b>ingeniero que diseña los sensores de alarma</b>: decide dónde ponerlos, los prueba con simulacros y los ajusta para que no suenen en falso.',
+  what:'Diseña, escribe, prueba y mantiene reglas de detección como código (Sigma, SPL, KQL), gestiona su ciclo de vida en Git con CI/CD, mide falsos positivos y cobertura de ATT&CK, y valida con emulación de adversarios.',
+  day:[['09:00','Revisar métricas: regla con 300 FP/día'],['10:00','Afinar la regla y añadir excepciones documentadas'],['12:00','Nueva detección de acceso a lsass; test con Atomic Red Team'],['15:00','Pull request y revisión de un compañero'],['16:00','Despliegue y actualización de la matriz ATT&CK']],
+  skills:[['Sigma / SPL / KQL',90],['Git y CI/CD',75],['Telemetría de endpoints',85],['Emulación de adversarios',70],['Python',75]],
+  tools:['Sigma + sigma-cli','Git / GitHub Actions','Atomic Red Team, Caldera','SIEM','ATT&CK Navigator'],
+  certs:['GIAC GCDA','SANS SEC555 / SEC599','Splunk Certified Cybersecurity Defense Engineer','Microsoft SC-200'],
+  next:'Arquitectura de detección, liderazgo técnico del SOC o Purple Team lead.',
+  videos:['hunting','snort','splunk']},
+ {id:'eng',lvl:3,badge:'SENIOR · PLATAFORMA',icon:'🛠️',name:'Security Engineer (Blue)',
+  ana:'Es el <b>ingeniero que construye y refuerza las murallas</b>: instala, configura, integra y automatiza las defensas.',
+  what:'Despliega y mantiene firewalls, EDR, SIEM, IDS; aplica hardening (CIS Benchmarks); automatiza respuestas con SOAR y Python; gestiona vulnerabilidades y la seguridad en la nube e infraestructura como código.',
+  day:[['09:00','Desplegar Suricata en un nuevo segmento'],['11:00','Playbook SOAR: bloquear IP en firewall desde una alerta'],['13:00','Revisar resultados de Nessus y coordinar parches'],['15:00','Hardening de plantillas de servidores con CIS'],['16:30','Revisión de Terraform de un equipo de desarrollo']],
+  skills:[['Redes y firewalls',85],['Linux / Windows Server',85],['Automatización (Python, SOAR)',75],['Cloud (AWS/Azure)',65],['Gestión de vulnerabilidades',75]],
+  tools:['Nessus / Qualys','Suricata, Zabbix','SOAR (Shuffle, XSOAR)','Terraform, Ansible','pfSense / OPNsense'],
+  certs:['CompTIA CASP+ / SecurityX','AWS Security Specialty','AZ-500','GIAC GCED'],
+  next:'Arquitectura de seguridad o liderazgo de ingeniería.',
+  videos:['nmap','nessus','zabbix','shodan']},
+ {id:'arq',lvl:4,badge:'LEAD · GESTIÓN Y DISEÑO',icon:'🏛️',name:'SOC Manager / Arquitecto de seguridad',
+  ana:'El <b>SOC Manager</b> es el jefe de la sala de vigilancia (turnos, personas, métricas). El <b>arquitecto</b> es quien diseña los planos del castillo entero.',
+  what:'SOC Manager: dimensiona equipos y turnos, define procesos y SLAs, mide MTTD/MTTR, gestiona presupuesto y proveedores. Arquitecto: diseña la arquitectura de seguridad (Zero Trust, segmentación, identidad), elige tecnologías y asegura que encajen.',
+  day:[['09:00','Revisión de métricas semanales del SOC'],['10:30','Comité de cambios: nueva segmentación de red'],['12:00','Entrevistas para dos puestos L1'],['15:00','Evaluación de un nuevo EDR con proveedores'],['17:00','Informe para el CISO']],
+  skills:[['Liderazgo de personas',85],['Métricas y procesos',85],['Arquitectura Zero Trust',75],['Gestión de presupuesto',65],['Visión técnica amplia',80]],
+  tools:['NIST CSF 2.0','MITRE ATT&CK / D3FEND','Dashboards de métricas','Frameworks Zero Trust (NIST 800-207)'],
+  certs:['CISSP','CISM','SABSA / TOGAF','GIAC GSOM'],
+  next:'Dirección de seguridad: CISO.',
+  videos:['intro','ir']},
+ {id:'ciso',lvl:5,badge:'EJECUTIVO · DIRECCIÓN',icon:'👔',name:'CISO (Chief Information Security Officer)',
+  ana:'Es el <b>general</b> que decide la estrategia de defensa del reino y rinde cuentas al rey (el consejo de administración) en términos de riesgo y dinero.',
+  what:'Define la estrategia y el presupuesto de ciberseguridad, gestiona el riesgo, asegura el cumplimiento (ISO 27001, ENS, NIS2, DORA, RGPD), comunica al consejo y lidera la gestión de crisis en incidentes graves.',
+  day:[['09:00','Comité de dirección: riesgo cibernético del trimestre'],['11:00','Reunión con auditoría por NIS2'],['13:00','Almuerzo con el CFO: presupuesto del próximo año'],['16:00','Simulacro de crisis de ransomware con dirección'],['18:00','Revisión de la estrategia a 3 años']],
+  skills:[['Gestión de riesgos',95],['Comunicación ejecutiva',95],['Normativa y cumplimiento',85],['Liderazgo',90],['Conocimiento técnico (amplio)',70]],
+  tools:['ISO 27001 / 27005','NIST CSF 2.0','ENS, NIS2, DORA','Métricas de riesgo (FAIR)'],
+  certs:['CISSP','CISM','CRISC','MBA / programas ejecutivos'],
+  next:'Comités de dirección, asesoría, consejos de administración.',
+  videos:['intro','nessus','ir']}
+];
+const VN={intro:'Fundamentos y perfiles',redes:'Redes',nmap:'Nmap',nessus:'Nessus',snort:'Snort',suricata:'Suricata',splunk:'Splunk',zabbix:'Zabbix',shodan:'Shodan',maltego:'Maltego',ir:'Respuesta a incidentes',hunting:'Threat Hunting',ia:'IA en el SOC'};
+document.getElementById('profiles').innerHTML = '<span class="eyebrow">Detalle de cada perfil</span><h2 style="margin-bottom:30px">Perfil a perfil</h2>' + P.map(p=>`
+ <article class="profile reveal" id="${p.id}">
+  <div>
+   <div class="avatar"><svg viewBox="0 0 200 200" width="80%"><circle cx="100" cy="100" r="92" fill="none" stroke="#1d2a45" stroke-width="2" stroke-dasharray="4 6"/><circle cx="100" cy="100" r="70" fill="#0f182b" stroke="currentColor" stroke-width="3" class="lvl-${p.lvl}" style="background:none"/><text x="100" y="125" font-size="72" text-anchor="middle">${p.icon}</text></svg></div>
+   <h4 style="margin-top:18px">Habilidades</h4>
+   ${p.skills.map(s=>`<div style="font-size:.85rem;display:flex;justify-content:space-between"><span>${s[0]}</span><span class="muted">${s[1]}%</span></div><div class="meter"><span style="width:${s[1]}%"></span></div>`).join('')}
+  </div>
+  <div>
+   <span class="badge-lvl lvl-${p.lvl}">${p.badge}</span>
+   <h2 style="font-size:1.7rem">${p.name}</h2>
+   <div class="callout analogy" style="margin-top:6px"><div class="ct">💡 Analogía</div><p>${p.ana}</p></div>
+   <h4>¿Qué hace?</h4><p class="muted">${p.what}</p>
+   <h4>Un día típico</h4><ul class="daytl">${p.day.map(d=>`<li><b>${d[0]}</b><span>${d[1]}</span></li>`).join('')}</ul>
+   <div class="grid g2" style="gap:16px;margin-top:14px">
+    <div><h4>Herramientas</h4>${p.tools.map(t=>`<span class="tag c">${t}</span>`).join('')}</div>
+    <div><h4>Certificaciones recomendadas</h4>${p.certs.map(t=>`<span class="tag p">${t}</span>`).join('')}</div>
+   </div>
+   <div class="callout ok" style="margin-bottom:10px"><div class="ct">🚀 Cómo pasar al siguiente nivel</div><p>${p.next}</p></div>
+   <div>${p.videos.map(v=>`<a class="btn small" style="margin:4px 6px 0 0" href="videos.html#${v}">▶ ${VN[v]}</a>`).join('')}</div>
+  </div>
+ </article>`).join('');
+</script>
+<script src="assets/js/common.js"></script>
+</body>
+</html>
