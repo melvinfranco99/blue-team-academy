@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Videos prácticos · Blue Team Academy</title>
-<meta name="description" content="Videos dinámicos y narrados de ciberseguridad defensiva: Nmap, Nessus, Snort, Suricata, Splunk, Zabbix, Shodan, Maltego, respuesta a incidentes, threat hunting e IA.">
+<meta name="description" content="25 videos narrados de ciberseguridad defensiva: Nmap, Wireshark, Suricata, Splunk, Wazuh, Elastic, Sentinel, EDR, forense, YARA, Sigma, SOAR, AWS, Azure, Kubernetes e IA.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css"><link rel="stylesheet" href="assets/css/player.css">
+<link rel="stylesheet" href="assets/css/styles.css"><link rel="stylesheet" href="assets/css/player.css?v=2">
 <link rel="icon" href="assets/img/favicon.svg">
 </head>
 <body>
@@ -16,7 +16,7 @@
     <div class="breadcrumb">inicio / videos</div>
     <span class="eyebrow">Academia en video</span>
     <h1>Videos <span class="grad">prácticos y narrados</span></h1>
-    <p class="lead">13 lecciones animadas (más de 1h40 de contenido) que te llevan desde cero hasta nivel senior. Cada video combina narración por voz, subtítulos, diagramas animados y <b>simulaciones de las herramientas reales</b> en acción: terminal, Splunk, Suricata, Nessus, Zabbix, Shodan, Maltego…</p>
+    <p class="lead">25 lecciones animadas (más de 4 horas de contenido), cada una con un <b>laboratorio guiado paso a paso</b>, que te llevan desde cero hasta nivel senior. Cada video combina narración por voz, subtítulos, diagramas animados y <b>prácticas simuladas con las herramientas reales</b>: Nmap, Wireshark, Suricata, Splunk, Wazuh, Elastic, Microsoft Sentinel, EDR, Volatility, YARA/Sigma, TheHive/MISP y <b>seguridad en la nube</b> (AWS, Azure, Kubernetes).</p>
     <div class="btn-row" style="margin-top:8px"><span class="tag c">▶ Espacio: reproducir/pausa</span><span class="tag c">← → escena</span><span class="tag c">F pantalla completa</span><span class="tag c">C subtítulos</span><span class="tag c">M voz</span></div>
   </div></section>
 
@@ -38,11 +38,12 @@
     <span class="eyebrow">Temario</span>
     <h2>Todas las lecciones <span id="prog" class="tag g" style="vertical-align:middle;font-size:.8rem"></span></h2>
     <p class="lead">Recomendamos verlas en orden: cada una se apoya en la anterior. Tu progreso se guarda en este navegador.</p>
-    <div class="grid g3" id="gallery" style="margin-top:28px"></div>
+    <div class="btn-row" id="cats" style="margin-top:22px"></div>
+    <div class="grid g3" id="gallery" style="margin-top:22px"></div>
   </div></section>
 </main>
 <footer id="site-footer"></footer>
-<script src="assets/js/player.js"></script>
+<script src="assets/js/player.js?v=2"></script>
 <script src="assets/js/videos/v01-intro.js"></script>
 <script src="assets/js/videos/v02-redes.js"></script>
 <script src="assets/js/videos/v03-nmap.js"></script>
@@ -56,12 +57,30 @@
 <script src="assets/js/videos/v11-ir.js"></script>
 <script src="assets/js/videos/v12-hunting.js"></script>
 <script src="assets/js/videos/v13-ia.js"></script>
+<script src="assets/js/videos/v14-wireshark.js"></script>
+<script src="assets/js/videos/v15-wazuh.js"></script>
+<script src="assets/js/videos/v16-elastic.js"></script>
+<script src="assets/js/videos/v17-sentinel.js"></script>
+<script src="assets/js/videos/v18-edr.js"></script>
+<script src="assets/js/videos/v19-forense.js"></script>
+<script src="assets/js/videos/v20-yara-sigma.js"></script>
+<script src="assets/js/videos/v21-soar.js"></script>
+<script src="assets/js/videos/v22-cloud-fund.js"></script>
+<script src="assets/js/videos/v23-aws.js"></script>
+<script src="assets/js/videos/v24-azure.js"></script>
+<script src="assets/js/videos/v25-k8s.js"></script>
+<script src="assets/js/videos/extras.js"></script>
+<script src="assets/js/videos/wt1.js"></script>
+<script src="assets/js/videos/wt2.js"></script>
+<script src="assets/js/videos/wt3.js"></script>
 <script src="assets/js/common.js"></script>
 <script>
 (function(){
   const V = VIDEOS.sort((a,b)=>a.n-b.n);
   const P = new CyberCast.Player(document.getElementById('player'), document.getElementById('side'));
-  let cur = 0;
+  let cur = 0, cat = 'all';
+  const CATS = [['all','Todas'],['base','🧱 Fundamentos'],['red','📡 Red e IDS'],['siem','📊 SIEM'],['osint','🌐 Monitorización y OSINT'],['ir','🚨 Respuesta, forense y detección'],['cloud','☁️ Nube'],['ia','🤖 IA']];
+  const CAT_OF = {intro:'base',redes:'base',nmap:'red',nessus:'red',snort:'red',suricata:'red',wireshark:'red',splunk:'siem',wazuh:'siem',elastic:'siem',sentinel:'siem',zabbix:'osint',shodan:'osint',maltego:'osint',ir:'ir',hunting:'ir',edr:'ir',forense:'ir',yarasigma:'ir',soar:'ir',cloud:'cloud',aws:'cloud',azure:'cloud',k8s:'cloud',ia:'ia'};
   function open(i, scroll){
     cur = (i+V.length)%V.length; const v = V[cur];
     P.load(v);
@@ -76,7 +95,9 @@
   function gallery(){
     const w = CyberCast.watched();
     document.getElementById('prog').textContent = `${w.length}/${V.length} completadas`;
-    document.getElementById('gallery').innerHTML = V.map((v,i)=>`
+    document.getElementById('cats').innerHTML = CATS.map(([k,t])=>`<button class="btn small ${k===cat?'primary':''}" data-c="${k}">${t}</button>`).join('');
+    document.querySelectorAll('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.c;gallery();});
+    document.getElementById('gallery').innerHTML = V.map((v,i)=>(cat!=='all'&&CAT_OF[v.id]!==cat)?'':`
       <article class="card vcard link" data-i="${i}" style="${i===cur?'border-color:var(--accent)':''}">
         <div class="vthumb" style="background:radial-gradient(circle at 30% 30%, ${v.color}33, transparent 60%), linear-gradient(135deg,#0c1424,#060a13)">
           ${w.includes(v.id)?'<span class="done-badge">✓ VISTO</span>':''}

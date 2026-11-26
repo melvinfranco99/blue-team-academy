@@ -175,3 +175,6 @@
 .chi time{font-family:var(--mono);color:var(--accent);font-size:.8rem;flex:none;padding-top:2px}
 .chi p{margin:0;color:var(--muted)}
 .chi.cur p{color:var(--text)}
+
+.s-h .stp{font:800 22px var(--mono,monospace);background:linear-gradient(135deg,#22d3ee,#3b82f6);color:#03101b;padding:6px 14px;border-radius:10px;white-space:nowrap}
+.s-note{margin:-14px 0 18px;font-size:23px;color:#fde68a;background:rgba(245,158,11,.08);border-left:5px solid #f59e0b;padding:10px 16px;border-radius:8px}

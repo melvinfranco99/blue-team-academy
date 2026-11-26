@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOC simulado: investiga incidentes reales paso a paso · Blue Team Academy</title>
+<meta name="description" content="Simulador de SOC: investiga incidentes con logs reales simulados (auth.log, Sysmon, Apache, DNS, CloudTrail, Microsoft 365), responde preguntas y decide la contención.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css"><link rel="stylesheet" href="assets/css/soclab.css?v=2"><link rel="icon" href="assets/img/favicon.svg">
+</head>
+<body>
+<header id="site-header"></header>
+<main>
+<section class="page-hero"><div class="container">
+  <div class="breadcrumb">inicio / laboratorios / soc simulado</div>
+  <span class="eyebrow">Práctica activa</span>
+  <h1>SOC simulado: <span class="grad">investiga tú</span> el incidente</h1>
+  <p class="lead">Seis incidentes realistas ya ocurridos. Tienes las alertas y los logs (Linux, Sysmon, Apache, DNS, AWS CloudTrail y Microsoft 365). Escribe consultas como un analista real (<code>grep</code>, <code>awk</code>, <code>sort</code>, <code>uniq -c</code>…), responde a las preguntas de la investigación y decide la respuesta. Si te atascas, «💡 Cómo» te enseña el paso exacto y por qué.</p>
+  <div class="btn-row"><span class="tag c">1 · Lee el briefing y las alertas</span><span class="tag c">2 · Consulta los logs</span><span class="tag c">3 · Responde las preguntas</span><span class="tag c">4 · Elige la contención</span><span class="tag c">5 · Informe y nota</span></div>
+</div></section>
+
+<section class="section" style="padding-top:30px"><div class="soc">
+  <h2 style="margin-top:0">Elige un caso</h2>
+  <div class="cases" id="cases"></div>
+
+  <div id="work" hidden>
+    <div class="soc-grid">
+      <div>
+        <div class="pnl">
+          <h3 id="c-title"></h3>
+          <p class="brief" id="c-brief"></p>
+          <div class="alq" id="c-alerts"></div>
+          <div class="scorebar"><span class="pts" id="pts"></span><span class="muted" id="prog"></span></div>
+        </div>
+        <div class="pnl">
+          <h3>🔎 Preguntas de la investigación</h3>
+          <div class="qs" id="c-qs"></div>
+        </div>
+        <div class="pnl">
+          <h3>🛡️ ¿Qué acciones de respuesta tomarías?</h3>
+          <p class="brief" style="margin-top:0">Marca todas las que harías. Hay acciones correctas, incorrectas y desproporcionadas.</p>
+          <div class="acts" id="c-acts"></div>
+          <div class="btn-row" style="margin-top:12px"><button class="btn primary" id="finish">✅ Cerrar el caso y ver mi nota</button></div>
+        </div>
+      </div>
+      <div>
+        <div class="pnl">
+          <h3>📜 Explorador de logs</h3>
+          <div class="srcs" id="srcs"></div>
+          <div class="qbar"><span id="qp"></span><input id="qin" spellcheck="false" autocomplete="off" placeholder='grep "Failed password" | wc -l'><button id="qrun">▶ Ejecutar</button><button id="qclr">✕</button></div>
+          <div class="ex" id="ex"></div>
+          <div class="out" id="out"></div>
+          <details style="margin-top:10px"><summary>📖 Chuleta de comandos</summary><div class="table-wrap"><table>
+            <tr><td><code>grep "texto"</code></td><td>líneas que contienen el texto (<code>-i</code> sin mayúsculas, <code>-v</code> invertir, <code>-c</code> contar, <code>-o</code> solo lo que coincide, admite regex)</td></tr>
+            <tr><td><code>awk '{print $1, $4}'</code></td><td>quedarse con columnas (separadas por espacios). <code>-F'"'</code> cambia el separador. <code>$NF</code> = última</td></tr>
+            <tr><td><code>cut -d"#" -f1</code></td><td>partir por un carácter y quedarse con un trozo</td></tr>
+            <tr><td><code>sort | uniq -c | sort -rn</code></td><td>la fórmula mágica: contar repeticiones y ordenar de más a menos</td></tr>
+            <tr><td><code>head -20</code> · <code>tail -5</code> · <code>wc -l</code></td><td>primeras líneas · últimas líneas · contar líneas</td></tr>
+          </table></div></details>
+        </div>
+        <div class="pnl" id="c-report" hidden>
+          <h3>📝 Informe del incidente</h3>
+          <div style="display:flex;gap:18px;align-items:center"><div style="font-size:3.2rem;font-weight:800" id="rep-grade"></div><div id="rep-pts" class="muted"></div></div>
+          <div class="rep" id="rep-text"></div>
+          <div class="btn-row" style="margin-top:12px"><button class="btn small" id="copyrep">📋 Copiar informe</button><button class="btn small" id="again">↺ Repetir caso</button><a class="btn small" href="ia.html#tutor">🤖 Pedir feedback al tutor IA</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="section alt"><div class="container">
+  <span class="eyebrow">Método</span><h2>Cómo investiga un analista: el método en 6 pasos</h2>
+  <div class="grid g3">
+    <div class="card"><h3>1 · Entiende la alerta</h3><p>¿Qué regla saltó, en qué equipo, a qué hora? Anota la hipótesis: «posible fuerza bruta contra srv-web01».</p></div>
+    <div class="card"><h3>2 · Mira los datos crudos</h3><p><code>head</code> y <code>tail</code> para ver el formato. Identifica qué columna es la IP, el usuario, la hora…</p></div>
+    <div class="card"><h3>3 · Cuenta y ordena</h3><p><code>awk … | sort | uniq -c | sort -rn</code>. Los atacantes destacan por volumen… o por ser raros.</p></div>
+    <div class="card"><h3>4 · Pivota</h3><p>Encontraste una IP: ¿qué más hizo? Un usuario: ¿desde dónde entró? Cada respuesta abre la siguiente pregunta.</p></div>
+    <div class="card"><h3>5 · Construye la cronología</h3><p>Primer contacto → acceso → acciones → impacto. Con hora exacta y la evidencia de cada paso.</p></div>
+    <div class="card"><h3>6 · Contén y documenta</h3><p>Acciones proporcionadas, primero lo más urgente, sin destruir evidencias. Informe claro para la dirección.</p></div>
+  </div>
+  <div class="callout"><div class="ct">🎬 Complementa con los videos</div><p>Cada caso se apoya en un video: <a href="videos.html#splunk">Splunk</a> y <a href="videos.html#elastic">Elastic</a> (consultas), <a href="videos.html#wazuh">Wazuh + Sysmon</a> (macro), <a href="videos.html#wireshark">Wireshark</a> (DNS), <a href="videos.html#aws">AWS</a> y <a href="videos.html#azure">Azure</a> (nube), <a href="videos.html#ir">respuesta a incidentes</a>.</p></div>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/soclab.js?v=2"></script>
+<script src="assets/js/common.js"></script>
+</body>
+</html>

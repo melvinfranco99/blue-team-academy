@@ -9,7 +9,7 @@ window.VIDEOS = window.VIDEOS || [];
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const md = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<code>$1</code>');
   const div = (cls, html) => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; return d; };
-  const head = s => s.title ? `<div class="s-h">${s.icon ? `<span class="ic">${s.icon}</span>` : ''}<span>${md(s.title)}</span></div>` : '';
+  const head = s => s.title ? `<div class="s-h">${s.step ? `<span class="stp">PASO ${s.step[0]}/${s.step[1]}</span>` : ''}${s.icon ? `<span class="ic">${s.icon}</span>` : ''}<span>${md(s.title)}</span></div>${s.note ? `<div class="s-note">👉 ${md(s.note)}</div>` : ''}` : '';
   const win = (title, body) => `<div class="win"><div class="win-bar"><i></i><i></i><i></i><span>${esc(title)}</span></div>${body}</div>`;
   const fmt = t => { t = Math.max(0, Math.floor(t)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
   const sentences = s => {
@@ -161,7 +161,7 @@ window.VIDEOS = window.VIDEOS || [];
   R.splunk = s => {
     const bars = s.bars ? `<div class="bars">${s.bars.map(b => `<div class="b ${b[2] ? 'r' : ''}" data-h="${b[1]}"><em>${b[1]}</em><span>${esc(b[0])}</span></div>`).join('')}</div>` : '';
     const tbl = s.head ? `<div style="flex:1.3;overflow:hidden"><table class="tbl"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map((r, i) => `<tr class="${(s.hl || []).includes(i) ? 'hx' : ''}">${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : '';
-    const el = div('cp-scene', head(s) + `<div class="spl"><div class="spl-top"><b>splunk<span>&gt;</span></b><span>Search &amp; Reporting</span><span>Dashboards</span><span>Alerts</span><span style="margin-left:auto">${esc(s.range || 'Últimas 24 horas')}</span></div>
+    const el = div('cp-scene', head(s) + `<div class="spl"><div class="spl-top"><b>${s.brand ? esc(s.brand) : 'splunk<span>&gt;</span>'}</b>${(s.tabs || ['Search &amp; Reporting', 'Dashboards', 'Alerts']).map(x => `<span>${x}</span>`).join('')}<span style="margin-left:auto">${esc(s.range || 'Últimas 24 horas')}</span></div>
       <div class="spl-q"><div></div><button>🔍</button></div><div class="spl-meta"><span>${esc(s.count || '')}</span><span class="${s.tab === 'Events' ? 'a' : ''}">Events</span><span class="${s.tab !== 'Events' && s.tab !== 'Visualization' ? 'a' : ''}">Statistics</span><span class="${s.tab === 'Visualization' ? 'a' : ''}">Visualization</span></div>
       <div class="spl-res">${tbl}${bars}</div></div>`);
     const q = el.querySelector('.spl-q div'), trs = [...el.querySelectorAll('tbody tr')], bs = [...el.querySelectorAll('.bars .b')], meta = el.querySelector('.spl-meta');

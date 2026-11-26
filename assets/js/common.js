@@ -7,6 +7,7 @@
     ['perfiles.html', 'Perfiles'],
     ['videos.html', 'Videos'],
     ['laboratorios.html', 'Laboratorios'],
+    ['soc.html', 'SOC simulado'],
     ['ia.html', 'IA en el SOC'],
     ['ruta.html', 'Ruta y Quiz'],
   ];
@@ -31,7 +32,7 @@
     footer.innerHTML = `<div class="container"><div class="foot-grid">
       <div><a class="brand" href="index.html">${LOGO}<span>Blue Team Academy</span></a><p style="margin-top:12px">Plataforma educativa gratuita para aprender ciberseguridad defensiva desde cero: perfiles profesionales, fundamentos, videos prácticos y uso de IA en el SOC.</p></div>
       <div><h4>Aprender</h4><ul><li><a href="fundamentos.html">Fundamentos</a></li><li><a href="perfiles.html">Perfiles</a></li><li><a href="ruta.html">Ruta de aprendizaje</a></li></ul></div>
-      <div><h4>Practicar</h4><ul><li><a href="videos.html">Videos prácticos</a></li><li><a href="laboratorios.html">Laboratorios</a></li><li><a href="ia.html">Tutor IA</a></li></ul></div>
+      <div><h4>Practicar</h4><ul><li><a href="videos.html">Videos prácticos</a></li><li><a href="laboratorios.html">Laboratorios</a></li><li><a href="soc.html">SOC simulado</a></li><li><a href="ia.html">Tutor IA</a></li></ul></div>
       <div><h4>Uso ético</h4><ul><li>Practica solo en sistemas propios o con autorización por escrito.</li></ul></div>
       </div><div class="copy">© ${new Date().getFullYear()} Blue Team Academy · Contenido educativo. Las marcas (Splunk, Nessus, Snort, Suricata, Zabbix, Shodan, Maltego, Nmap…) pertenecen a sus propietarios; los videos son simulaciones didácticas de sus interfaces.</div></div>`;
   }
