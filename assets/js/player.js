@@ -12,7 +12,17 @@ window.VIDEOS = window.VIDEOS || [];
   const head = s => s.title ? `<div class="s-h">${s.icon ? `<span class="ic">${s.icon}</span>` : ''}<span>${md(s.title)}</span></div>` : '';
   const win = (title, body) => `<div class="win"><div class="win-bar"><i></i><i></i><i></i><span>${esc(title)}</span></div>${body}</div>`;
   const fmt = t => { t = Math.max(0, Math.floor(t)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
-  const sentences = s => (s || '').split(/(?<=[.!?…:])\s+(?=[¿¡A-ZÁÉÍÓÚÑ0-9"(])/).filter(Boolean);
+  const sentences = s => {
+    const out = [];
+    (s || '').split(/(?<=[.!?…])\s+/).filter(Boolean).forEach(function cut(x) {
+      if (x.length <= 125) return out.push(x);
+      const mid = x.length / 2; let best = -1;
+      for (const m of x.matchAll(/[,;:]\s/g)) if (best < 0 || Math.abs(m.index - mid) < Math.abs(best - mid)) best = m.index;
+      if (best < 25 || best > x.length - 25) return out.push(x);
+      cut(x.slice(0, best + 1)); cut(x.slice(best + 2));
+    });
+    return out;
+  };
   const durOf = s => s.d || Math.max(7, Math.min(70, (s.say || '').length / 14.2 + 1.8));
 
   /* ---------------- Resaltado de sintaxis sencillo ---------------- */
